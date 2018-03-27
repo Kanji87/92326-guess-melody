@@ -1,7 +1,7 @@
 # Личный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Руслан Полонкоев](https://up.htmlacademy.ru/ecmascript/4/user/92326).
-* Наставник: `Неизвестно`.
+* Наставник: [Денис Корнейчук](https://htmlacademy.ru/profile/id70618).
 
 ---
 
