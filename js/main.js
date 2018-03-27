@@ -48,14 +48,12 @@ const showNextSection = () => {
   if (currentSectionNum !== templateSections.length - 1) {
     showSection(currentSectionNum + 1);
   }
-  return false;
 };
 
 const showPrevSection = () => {
   if (currentSectionNum !== 0) {
     showSection(currentSectionNum - 1);
   }
-  return false;
 };
 
 showSection(0);
@@ -63,11 +61,11 @@ showSection(0);
 document.addEventListener(`keydown`, (e) => {
   if (keycodes.includes(e.keyCode)) {
     keycodesMap[e.keyCode] = true;
-    if (keycodesMap[ALT_KEYCODE] && keycodesMap[RIGHT_KEYCODE]) {
-      showNextSection();
-    } else if (keycodesMap[ALT_KEYCODE] && keycodesMap[LEFT_KEYCODE]) {
-      showPrevSection();
-    }
+  }
+  if (keycodesMap[ALT_KEYCODE] && keycodesMap[RIGHT_KEYCODE]) {
+    showNextSection();
+  } else if (keycodesMap[ALT_KEYCODE] && keycodesMap[LEFT_KEYCODE]) {
+    showPrevSection();
   }
 });
 
