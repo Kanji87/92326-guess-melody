@@ -74,11 +74,3 @@ document.addEventListener(`keyup`, (e) => {
     keycodesMap[e.keyCode] = false;
   }
 });
-
-const createTemplate = (templateString) => {
-  const dummyWrap = document.createElement(`div`);
-  dummyWrap.innerHTML = templateString.trim();
-  return dummyWrap.firstChild;
-};
-
-createTemplate(`<p>text</p>`);
