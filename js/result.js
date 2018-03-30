@@ -1,7 +1,9 @@
 import createTemplate from './create_template';
+import renderTemplate from './render_template';
+import welcome from './welcome';
+
 
 const result = createTemplate(`
-  <!-- Результат игры: выигрыш -->
   <section class="main main--result">
     <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
@@ -13,5 +15,11 @@ const result = createTemplate(`
     <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
   </section>
 `);
+
+document.addEventListener(`click`, (ect) => {
+  if (ect.target.classList.contains(`main-replay`)) {
+    renderTemplate(welcome);
+  }
+});
 
 export default result;

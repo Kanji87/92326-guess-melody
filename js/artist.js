@@ -1,7 +1,8 @@
 import createTemplate from './create_template';
+import renderTemplate from './render_template';
+import genre from './genre';
 
 const artist = createTemplate(`
-  <!-- Игра на выбор исполнителя -->
   <section class="main main--level main--level-artist">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
       <circle
@@ -62,5 +63,20 @@ const artist = createTemplate(`
     </div>
   </section>
 `);
+
+document.addEventListener(`click`, (evt) => {
+  if (evt.target.closest(`.main-answer`)) {
+    renderTemplate(genre);
+
+    const answerButton = document.querySelector(`.genre-answer-send`);
+    answerButton.setAttribute(`disabled`, `disabled`);
+
+    document.addEventListener(`click`, (answerEvt) => {
+      if (answerEvt.target.closest(`.genre-answer`)) {
+        answerButton.removeAttribute(`disabled`);
+      }
+    });
+  }
+});
 
 export default artist;

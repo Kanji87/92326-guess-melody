@@ -1,7 +1,8 @@
 import createTemplate from './create_template';
+import renderTemplate from './render_template';
+import artist from './artist';
 
 const welcome = createTemplate(`
-  <!-- Приветствие -->
   <section class="main main--welcome">
     <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
     <button class="main-play">Начать игру</button>
@@ -13,5 +14,11 @@ const welcome = createTemplate(`
     </p>
   </section>
 `);
+
+document.addEventListener(`click`, (evt) => {
+  if (evt.target.classList.contains(`main-play`)) {
+    renderTemplate(artist);
+  }
+});
 
 export default welcome;

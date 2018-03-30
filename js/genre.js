@@ -1,7 +1,10 @@
 import createTemplate from './create_template.js';
+import renderTemplate from './render_template';
+import result from './result';
+import resultTimeout from './result_timeout';
+import resultLose from './result_lose';
 
 const genre = createTemplate(`
-  <!-- Игра на выбор жанра -->
   <section class="main main--level main--level-genre">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
       <circle
@@ -85,5 +88,20 @@ const genre = createTemplate(`
     </div>
   </section>
 `);
+
+const results = [
+  result,
+  resultTimeout,
+  resultLose
+];
+
+const randomInt = (max) => Math.floor(Math.random() * max);
+
+document.addEventListener(`click`, (evt) => {
+  evt.preventDefault();
+  if (evt.target.classList.contains(`genre-answer-send`)) {
+    renderTemplate(results[randomInt(3)]);
+  }
+});
 
 export default genre;
