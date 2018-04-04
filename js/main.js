@@ -1,4 +1,4 @@
-import welcome from './welcome';
-import renderTemplate from './render_template';
+import welcome from './templates/welcome';
+import renderTemplate from './templates/render_template';
 
 renderTemplate(welcome);
