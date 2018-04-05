@@ -13,6 +13,11 @@ const testPlayerResult2 = {
   lifeLeft: 1,
   timeLeft: 10
 };
+const testPlayerResult3 = {
+  points: 16,
+  lifeLeft: 1,
+  timeLeft: 10
+};
 const losePlayerResult = {
   points: 5,
   lifeLeft: 0,
@@ -38,6 +43,9 @@ describe(`playerResult function`, () => {
   });
   it(`expect win string`, () => {
     expect(showPlayerResult(testResults1, testPlayerResult2)).to.be.a.string(`Вы заняли 4-ое место из 7 игроков. Это лучше, чем у 42% игроков`);
+  });
+  it(`expect 3 place win string`, () => {
+    expect(showPlayerResult(testResults1, testPlayerResult3)).to.be.a.string(`Вы заняли 3-е место из 7 игроков. Это лучше, чем у 57% игроков`);
   });
   it(`expect top win string in loser array`, () => {
     expect(showPlayerResult(testResults2, testPlayerResult2)).to.be.a.string(`Вы заняли 1-ое место из 7 игроков. Это лучше, чем у 85% игроков`);
