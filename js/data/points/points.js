@@ -1,4 +1,4 @@
-export const getPoints = (answers, lifeLeft) => {
+const getPoints = (answers, lifeLeft) => {
   const startLifeNum = 2;
   let correctAnswersNum = 0;
   let fastAnswerNum = 0;
@@ -21,3 +21,5 @@ export const getPoints = (answers, lifeLeft) => {
   }
   return points;
 };
+
+export default getPoints;
