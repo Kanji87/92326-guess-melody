@@ -3,7 +3,7 @@ const addTimer = (gameTime) => {
     timeNum: gameTime,
     tick: () => {
       if (timer.timeNum < 0) {
-        return `Время вышло`;
+        return -1;
       }
       return timer.timeNum--;
     }

@@ -11,11 +11,10 @@ const playerPlaceEndings = (num) => {
 };
 
 const showPlayerResult = (arr, playerResult) => {
-  let resultString;
   if (playerResult.lifeLeft === 0) {
-    resultString = `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
+    return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   } else if (playerResult.timeLeft === 0) {
-    resultString = `Время вышло! Вы не успели отгадать все мелодии`;
+    return `Время вышло! Вы не успели отгадать все мелодии`;
   } else {
     const results = [...arr];
     results.push(playerResult.points);
@@ -25,9 +24,8 @@ const showPlayerResult = (arr, playerResult) => {
     const playersCount = results.length;
     const playerPlace = results.indexOf(playerResult.points) + 1;
     const playerRating = Math.floor((playersCount - playerPlace) / playersCount * 100);
-    resultString = `Вы заняли ${playerPlace}${playerPlaceEndings(playerPlace)} место из ${playersCount} игроков. Это лучше, чем у ${playerRating}% игроков`;
+    return `Вы заняли ${playerPlace}${playerPlaceEndings(playerPlace)} место из ${playersCount} игроков. Это лучше, чем у ${playerRating}% игроков`;
   }
-  return resultString;
 };
 
 export default showPlayerResult;

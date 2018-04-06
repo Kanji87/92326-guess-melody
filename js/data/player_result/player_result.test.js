@@ -1,6 +1,4 @@
-import {
-  expect
-} from 'chai';
+import {expect} from 'chai';
 import showPlayerResult from './player_result';
 
 const testPlayerResult1 = {
@@ -34,26 +32,34 @@ const testResults2 = [0, 0, 0, 0, 0, 0];
 const testResults3 = [10, 15, 1, 6, 12, 18];
 const testResults4 = [20, 20, 20, 20, 20, 20];
 
+const resultStrings = {
+  lifeEnded: `У вас закончились все попытки. Ничего, повезёт в следующий раз!`,
+  timeEnded: `Время вышло! Вы не успели отгадать все мелодии`,
+  fourthPlace: `Вы заняли 4-ое место из 7 игроков. Это лучше, чем у 42% игроков`,
+  thirdPlace: `Вы заняли 3-е место из 7 игроков. Это лучше, чем у 57% игроков`,
+  firstPlace: `Вы заняли 1-ое место из 7 игроков. Это лучше, чем у 85% игроков`
+};
+
 describe(`playerResult function`, () => {
   it(`expect lose string`, () => {
-    expect(showPlayerResult(testResults1, losePlayerResult)).to.have.string(`У вас закончились все попытки. Ничего, повезёт в следующий раз!`);
+    expect(showPlayerResult(testResults1, losePlayerResult)).to.have.string(resultStrings.lifeEnded);
   });
   it(`expect timeleft string`, () => {
-    expect(showPlayerResult(testResults1, timeleftPlayerResult)).to.have.string(`Время вышло! Вы не успели отгадать все мелодии`);
+    expect(showPlayerResult(testResults1, timeleftPlayerResult)).to.have.string(resultStrings.timeEnded);
   });
   it(`expect win string`, () => {
-    expect(showPlayerResult(testResults1, testPlayerResult2)).to.be.a.string(`Вы заняли 4-ое место из 7 игроков. Это лучше, чем у 42% игроков`);
+    expect(showPlayerResult(testResults1, testPlayerResult2)).to.be.a.string(resultStrings.fourthPlace);
   });
   it(`expect 3 place win string`, () => {
-    expect(showPlayerResult(testResults1, testPlayerResult3)).to.be.a.string(`Вы заняли 3-е место из 7 игроков. Это лучше, чем у 57% игроков`);
+    expect(showPlayerResult(testResults1, testPlayerResult3)).to.be.a.string(resultStrings.thirdPlace);
   });
   it(`expect top win string in loser array`, () => {
-    expect(showPlayerResult(testResults2, testPlayerResult2)).to.be.a.string(`Вы заняли 1-ое место из 7 игроков. Это лучше, чем у 85% игроков`);
+    expect(showPlayerResult(testResults2, testPlayerResult2)).to.be.a.string(resultStrings.firstPlace);
   });
   it(`expect top win string in normal array`, () => {
-    expect(showPlayerResult(testResults3, testPlayerResult1)).to.be.a.string(`Вы заняли 1-ое место из 7 игроков. Это лучше, чем у 85% игроков`);
+    expect(showPlayerResult(testResults3, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
   });
   it(`expect top win string in top rated players array`, () => {
-    expect(showPlayerResult(testResults4, testPlayerResult1)).to.be.a.string(`Вы заняли 1-ое место из 7 игроков. Это лучше, чем у 85% игроков`);
+    expect(showPlayerResult(testResults4, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
   });
 });

@@ -1,6 +1,4 @@
-import {
-  expect
-} from 'chai';
+import {expect} from 'chai';
 import addTimer from './timer.js';
 
 const testTimer = addTimer(3);
@@ -18,7 +16,7 @@ describe(`timer function`, () => {
   it(`expect to return 0 sec left`, () => {
     expect(testTimer.tick()).to.equal(0);
   });
-  it(`expect string with "timeleft" message`, () => {
-    expect(testTimer.tick()).to.be.a.string(`Время вышло`);
+  it(`expect to return "timeleft" value: -1`, () => {
+    expect(testTimer.tick()).to.equal(-1);
   });
 });
