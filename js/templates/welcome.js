@@ -1,12 +1,14 @@
 import createTemplate from './create_template';
 import renderTemplate from './render_template';
 import artist from './artist';
+import {gameData} from '../data/data';
+import renderLifebar from './lifebar';
 
 const rules = `
     <h2 class="title main-title">Правила игры</h2>
     <p class="text main-text">
-      Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.<br>
-      Ошибиться можно 3 раза.<br>
+      Правила просты&nbsp;— за&nbsp;${gameData.timeCount} минут ответить на все вопросы.<br>
+      Ошибиться можно ${gameData.lifeCount} раза.<br>
       Удачи!
     </p>
 `;
@@ -19,9 +21,32 @@ const welcome = createTemplate(`
   </section>
 `);
 
+const initAudioPlayer = (evt) => {
+  const players = document.querySelectorAll(`audio`);
+  const playerControls = document.querySelectorAll(`.player-control`);
+  const audioPlayer = evt.target.closest(`.player`).querySelector(`audio`);
+  if (audioPlayer.paused) {
+    players.forEach((player) => {
+      player.pause();
+    });
+    playerControls.forEach((control) => {
+      control.classList.remove(`player-control--pause`);
+    });
+    audioPlayer.play();
+    evt.target.classList.add(`player-control--pause`);
+  } else {
+    audioPlayer.pause();
+    evt.target.classList.remove(`player-control--pause`);
+  }
+};
+
 document.addEventListener(`click`, (evt) => {
   if (evt.target.classList.contains(`main-play`)) {
     renderTemplate(artist);
+    renderLifebar();
+  }
+  if (evt.target.classList.contains(`player-control`)) {
+    initAudioPlayer(evt);
   }
 });
 
