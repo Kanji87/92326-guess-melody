@@ -1,5 +1,5 @@
 const renderTemplate = (domNode) => {
-  const mainSection = document.querySelector(`.app`);
+  const mainSection = document.querySelector(`.main`);
   mainSection.innerHTML = ``;
   mainSection.appendChild(domNode);
 };
