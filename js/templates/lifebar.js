@@ -1,7 +1,7 @@
 import createTemplate from './create_template';
 import {gameData} from '../data/data';
 
-const mainWrap = document.querySelector(`.app`);
+const mainWrap = document.querySelector(`.app .main`);
 const lifebar = (lifesLeft) => createTemplate(`
 <div class="main-mistakes">
   ${new Array(lifesLeft).fill(`

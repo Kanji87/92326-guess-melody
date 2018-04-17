@@ -9,18 +9,17 @@ import renderLifebar from './lifebar';
 const artists = getRandomItems(3, artistsData);
 const winArtist = artists[0];
 
-const artistAnswerItem = (artistNum) => `
-  <div class="main-answer-wrapper">
-    <input class="main-answer-r" type="radio" id="answer-${artistNum + 1}" name="answer" value="val-${artistNum + 1}"/>
-    <label class="main-answer" for="answer-${artistNum + 1}">
-      <img class="main-answer-preview" src="${artists[artistNum].image}"
-          alt="${artists[artistNum].artist}" width="134" height="134">
-      ${artists[artistNum].artist}
-    </label>
-  </div>
-`;
-
 const renderArtistItems = (itemsNum) => {
+  const artistAnswerItem = (artistNum) => `
+    <div class="main-answer-wrapper">
+      <input class="main-answer-r" type="radio" id="answer-${artistNum + 1}" name="answer" value="val-${artistNum + 1}"/>
+      <label class="main-answer" for="answer-${artistNum + 1}">
+        <img class="main-answer-preview" src="${artists[artistNum].image}"
+            alt="${artists[artistNum].artist}" width="134" height="134">
+        ${artists[artistNum].artist}
+      </label>
+    </div>
+  `;
   let artistsNode = ``;
   for (let i = 0; i < itemsNum; i++) {
     artistsNode += artistAnswerItem(i);
