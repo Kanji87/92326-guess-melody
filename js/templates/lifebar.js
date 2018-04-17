@@ -14,8 +14,8 @@ const renderLifebar = () => {
     document.querySelector(`.main-mistakes`).remove();
   }
   mainWrap.querySelector(`.main`).insertBefore(lifebar(gameData.lifeCount), mainWrap.querySelector(`.main-wrap`));
-  console.log(`level: ${gameData.level}, points: ${gameData.points}, lifes: ${gameData.lifeCount}`);
-  console.log(gameData);
+  // console.log(`level: ${gameData.level}, points: ${gameData.points}, lifes: ${gameData.lifeCount}`);
+  // console.log(gameData);
 };
 
 export default renderLifebar;

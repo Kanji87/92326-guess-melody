@@ -1,6 +1,6 @@
 import createTemplate from './create_template';
-import renderTemplate from './render_template';
-import welcome from './welcome';
+// import renderTemplate from './render_template';
+// import welcome from './welcome';
 
 
 const result = createTemplate(`
@@ -18,7 +18,7 @@ const result = createTemplate(`
 
 document.addEventListener(`click`, (ect) => {
   if (ect.target.classList.contains(`main-replay`)) {
-    renderTemplate(welcome);
+    // renderTemplate(welcome);
   }
 });
 

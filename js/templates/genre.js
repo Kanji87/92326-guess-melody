@@ -5,43 +5,42 @@ import resultTimeout from './result_timeout';
 import resultLose from './result_lose';
 import timerTemplate from './timer';
 import {gameData, artistsData} from '../data/data';
+import getRandomItems from '../utils/utils';
 import renderLifebar from './lifebar';
 import artist from './artist';
 
-const createGenreTitle = () => {
-  // const randomGenre = Math.floor(Math.random() * artistsData.length);
-  return `<h2 class="title">Выберите ${artistsData[0].genre} треки</h2>`;
-};
+const genres = getRandomItems(4, artistsData);
+const winGenre = genres[0].genre;
 
 const genreAnswerItem = (genreNum) => `
   <div class="genre-answer">
     <div class="player-wrapper">
       <div class="player">
-        <audio src="${artistsData[genreNum].src}"></audio>
+        <audio src="${genres[genreNum].src}"></audio>
         <button class="player-control"></button>
         <div class="player-track">
           <span class="player-status"></span>
         </div>
       </div>
     </div>
-    <input type="checkbox" name="answer" value="${artistsData[genreNum].genre}" id="a-${genreNum + 1}">
+    <input type="checkbox" name="answer" value="${genres[genreNum].genre}" id="a-${genreNum + 1}">
     <label class="genre-answer-check" for="a-${genreNum + 1}"></label>
   </div>
 `;
 
 const renderGenreItems = (itemsNum) => {
-  let genres = ``;
+  let genresNode = ``;
   for (let i = 0; i < itemsNum; i++) {
-    genres += genreAnswerItem(i);
+    genresNode += genreAnswerItem(i);
   }
-  return genres;
+  return genresNode;
 };
 
 const genre = createTemplate(`
   <section class="main main--level main--level-genre">
     ${timerTemplate}
     <div class="main-wrap">
-      ${createGenreTitle()}
+      <h2 class="title">Выберите ${genres[0].genre} треки</h2>
       <form class="genre">
         ${renderGenreItems(4)}
         <button class="genre-answer-send" type="submit" disabled="disabled">Ответить</button>
@@ -64,7 +63,9 @@ document.addEventListener(`click`, (answerEvt) => {
     const checkbox = answerEvt.target.closest(`.genre-answer`).querySelector(`input`);
     checkbox.checked = !checkbox.checked;
 
+    let isCorrect = false;
     let isChecked = false;
+
     const checkboxes = document.querySelectorAll(`.genre-answer input`);
     for (let i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i].checked) {
@@ -72,6 +73,7 @@ document.addEventListener(`click`, (answerEvt) => {
         i = checkboxes.length - 1;
       }
     }
+
     if (isChecked) {
       answerButton.removeAttribute(`disabled`);
     } else {
