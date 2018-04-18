@@ -1,9 +1,10 @@
 import createTemplate from './create_template';
-import renderTemplate from './render_template';
-import artist from './artist';
+import {artist, initArtistEvents} from './artist';
+import {gameData, levels} from '../data/data';
 import renderLifebar from './lifebar';
+import renderTemplate from './render_template';
 
-const welcome = (data) => createTemplate(`
+export const welcome = (data) => createTemplate(`
   <section class="main main--welcome">
     <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
     <button class="main-play">Начать игру</button>
@@ -16,33 +17,11 @@ const welcome = (data) => createTemplate(`
   </section>
 `);
 
-const initAudioPlayer = (evt) => {
-  const players = document.querySelectorAll(`audio`);
-  const playerControls = document.querySelectorAll(`.player-control`);
-  const audioPlayer = evt.target.closest(`.player`).querySelector(`audio`);
-  if (audioPlayer.paused) {
-    players.forEach((player) => {
-      player.pause();
-    });
-    playerControls.forEach((control) => {
-      control.classList.remove(`player-control--pause`);
-    });
-    audioPlayer.play();
-    evt.target.classList.add(`player-control--pause`);
-  } else {
-    audioPlayer.pause();
-    evt.target.classList.remove(`player-control--pause`);
-  }
-};
-
-document.addEventListener(`click`, (evt) => {
-  if (evt.target.classList.contains(`main-play`)) {
-    renderTemplate(artist);
+export const initWelcomeEvents = () => {
+  const playButton = document.querySelector(`.main-play`);
+  playButton.addEventListener(`click`, () => {
+    renderTemplate(artist());
+    initArtistEvents();
     renderLifebar();
-  }
-  if (evt.target.classList.contains(`player-control`)) {
-    initAudioPlayer(evt);
-  }
-});
-
-export default welcome;
+  });
+};

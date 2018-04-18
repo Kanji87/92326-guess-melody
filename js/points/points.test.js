@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import getPoints from './points.js';
+import getPoints from './points';
 
 const failArray = [
   [true, 42],
