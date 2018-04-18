@@ -1,10 +1,7 @@
 import createTemplate from './create_template';
-import renderTemplate from './render_template';
 import timerTemplate from './timer';
-import {genre, initGenreEvents} from './genre';
-import {gameData, levels} from '../data/data';
+import {gameData, levels, goToNextLevel} from '../data/data';
 import {initAudioPlayer} from '../utils/utils';
-import renderLifebar from './lifebar';
 
 const renderArtistItems = (itemsNum) => {
   const artistAnswerItem = (artistNum) => `
@@ -50,15 +47,19 @@ export const initArtistEvents = () => {
   answers.forEach((answer) => {
     answer.addEventListener(`click`, () => {
       if (answer.getAttribute(`alt`) === levels[`level-${gameData.level}`].correctAnswerArtist) {
+        gameData.answerCount++;
         gameData.points += gameData.answerReward;
       } else {
-        gameData.points -= 1;
-        gameData.lifeCount -= 1;
+        if (gameData.points === 0) {
+          gameData.points = gameData.points;
+          gameData.lifeCount -= 1;
+        } else {
+          gameData.points -= 1;
+          gameData.lifeCount -= 1;
+        }
       }
       gameData.level++;
-      renderTemplate(genre());
-      renderLifebar();
-      initGenreEvents();
+      goToNextLevel(levels[`level-${gameData.level}`].levelType);
     });
   });
 

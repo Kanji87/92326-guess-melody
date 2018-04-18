@@ -1,10 +1,7 @@
 import createTemplate from './create_template';
-import renderTemplate from './render_template';
 import timerTemplate from './timer';
-import {gameData, levels} from '../data/data';
+import {gameData, levels, goToNextLevel} from '../data/data';
 import {initAudioPlayer} from '../utils/utils';
-import {artist, initArtistEvents} from './artist';
-import renderLifebar from './lifebar';
 
 const renderGenreItems = (itemsNum) => {
   const genreAnswerItem = (genreNum) => `
@@ -69,24 +66,21 @@ export const initGenreEvents = () => {
       }
     });
     if (isCorrect) {
+      gameData.answerCount++;
       gameData.points += gameData.answerReward;
     } else {
-      gameData.points -= 1;
-      gameData.lifeCount -= 1;
+      if (gameData.points === 0) {
+        gameData.points = gameData.points;
+        gameData.lifeCount -= 1;
+      } else {
+        gameData.points -= 1;
+        gameData.lifeCount -= 1;
+      }
     }
+
     gameData.level++;
-    renderTemplate(artist());
-    renderLifebar();
-    initArtistEvents();
+    goToNextLevel(levels[`level-${gameData.level}`].levelType);
   });
 
   initAudioPlayer();
 };
-
-// document.addEventListener(`click`, (submitEvt) => {
-//   submitEvt.preventDefault();
-//   if (submitEvt.target.classList.contains(`genre-answer-send`)) {
-//     renderTemplate(artist);
-//     renderLifebar();
-//   }
-// });

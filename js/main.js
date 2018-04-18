@@ -4,4 +4,3 @@ import {gameData} from './data/data';
 
 renderTemplate(welcome(gameData));
 initWelcomeEvents();
-

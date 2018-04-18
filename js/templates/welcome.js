@@ -1,6 +1,5 @@
 import createTemplate from './create_template';
 import {artist, initArtistEvents} from './artist';
-import {gameData, levels} from '../data/data';
 import renderLifebar from './lifebar';
 import renderTemplate from './render_template';
 
