@@ -8,14 +8,14 @@ const renderGenreItems = (itemsNum) => {
     <div class="genre-answer">
       <div class="player-wrapper">
         <div class="player">
-          <audio src="${levels[`level-` + gameData.level].genreList[genreNum].src}"></audio>
+          <audio src="${levels[gameData.level - 1].genreList[genreNum].src}"></audio>
           <button class="player-control"></button>
           <div class="player-track">
             <span class="player-status"></span>
           </div>
         </div>
       </div>
-      <input type="checkbox" name="answer" value="${levels[`level-` + gameData.level].genreList[genreNum].genre}" id="a-${genreNum + 1}">
+      <input type="checkbox" name="answer" value="${levels[gameData.level - 1].genreList[genreNum].genre}" id="a-${genreNum + 1}">
       <label class="genre-answer-check" for="a-${genreNum + 1}"></label>
     </div>
   `;
@@ -30,7 +30,7 @@ export const genre = () => createTemplate(`
   <section class="main main--level main--level-genre">
     ${timerTemplate}
     <div class="main-wrap">
-      <h2 class="title">Выберите ${levels[`level-` + gameData.level].correctAnswerGenre} треки</h2>
+      <h2 class="title">Выберите ${levels[gameData.level - 1].correctAnswerGenre} треки</h2>
       <form class="genre">
         ${renderGenreItems(4)}
         <button class="genre-answer-send" type="submit" disabled="disabled">Ответить</button>
@@ -40,7 +40,7 @@ export const genre = () => createTemplate(`
 `);
 
 export const initGenreEvents = () => {
-  const correctGenre = levels[`level-` + gameData.level].correctAnswerGenre;
+  const correctGenre = levels[gameData.level - 1].correctAnswerGenre;
   const checkboxes = document.querySelectorAll(`.genre-answer input`);
   const submitButton = document.querySelector(`.genre-answer-send`);
   checkboxes.forEach((checkbox) => {
@@ -79,7 +79,11 @@ export const initGenreEvents = () => {
     }
 
     gameData.level++;
-    goToNextLevel(levels[`level-${gameData.level}`].levelType);
+    if (gameData.level < levels.length) {
+      goToNextLevel(levels[gameData.level - 1].levelType);
+    } else {
+      goToNextLevel();
+    }
   });
 
   initAudioPlayer();

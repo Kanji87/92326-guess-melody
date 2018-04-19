@@ -4,6 +4,7 @@ import {artist, initArtistEvents} from '../templates/artist';
 import renderLifebar from '../templates/lifebar';
 import resultLose from '../templates/result_lose';
 import result from '../templates/result';
+import {welcome, initWelcomeEvents} from '../templates/welcome';
 
 export const gameData = {
   lifeCount: 3,
@@ -16,8 +17,8 @@ export const gameData = {
   points: 0
 };
 
-export const levels = {
-  'level-1': {
+export const levels = [
+  {
     levelType: `artist`,
     artistList: [
       {
@@ -50,7 +51,7 @@ export const levels = {
       return this.artistList[this.correctAnswerNum].artist;
     }
   },
-  'level-2': {
+  {
     levelType: `genre`,
     genreList: [
       {
@@ -78,7 +79,7 @@ export const levels = {
       return this.genreList[this.correctAnswerNum].genre;
     }
   },
-  'level-3': {
+  {
     levelType: `artist`,
     artistList: [
       {
@@ -111,7 +112,7 @@ export const levels = {
       return this.artistList[this.correctAnswerNum].artist;
     }
   },
-  'level-4': {
+  {
     levelType: `genre`,
     genreList: [
       {
@@ -139,7 +140,7 @@ export const levels = {
       return this.genreList[this.correctAnswerNum].genre;
     }
   },
-  'level-5': {
+  {
     levelType: `artist`,
     artistList: [
       {
@@ -172,7 +173,7 @@ export const levels = {
       return this.artistList[this.correctAnswerNum].artist;
     }
   },
-  'level-6': {
+  {
     levelType: `genre`,
     genreList: [
       {
@@ -200,7 +201,7 @@ export const levels = {
       return this.genreList[this.correctAnswerNum].genre;
     }
   },
-  'level-7': {
+  {
     levelType: `artist`,
     artistList: [
       {
@@ -233,7 +234,7 @@ export const levels = {
       return this.artistList[this.correctAnswerNum].artist;
     }
   },
-  'level-8': {
+  {
     levelType: `genre`,
     genreList: [
       {
@@ -261,7 +262,7 @@ export const levels = {
       return this.genreList[this.correctAnswerNum].genre;
     }
   },
-  'level-9': {
+  {
     levelType: `artist`,
     artistList: [
       {
@@ -294,7 +295,7 @@ export const levels = {
       return this.artistList[this.correctAnswerNum].artist;
     }
   },
-  'level-10': {
+  {
     levelType: `genre`,
     genreList: [
       {
@@ -321,15 +322,25 @@ export const levels = {
     get correctAnswerGenre() {
       return this.genreList[this.correctAnswerNum].genre;
     }
-  },
-  'level-11': {
-    levelType: `win`
   }
+];
+
+const restartGame = () => {
+  const replay = document.querySelector(`.main-replay`);
+  replay.addEventListener(`click`, () => {
+    gameData.level = 1;
+    gameData.points = 0;
+    gameData.lifeCount = 3;
+    gameData.timeCount = 5;
+    renderTemplate(welcome(gameData));
+    initWelcomeEvents();
+  });
 };
 
 export const goToNextLevel = (levelType) => {
   if (gameData.lifeCount < 0) {
     renderTemplate(resultLose);
+    restartGame();
   } else {
     if (levelType === `genre`) {
       renderTemplate(genre());
@@ -339,13 +350,14 @@ export const goToNextLevel = (levelType) => {
       renderTemplate(artist());
       renderLifebar();
       initArtistEvents();
-    } else if (levelType === `win`) {
+    } else if (gameData.level > levels.length) {
       const playerResult = {
         points: gameData.points,
         lifeLeft: gameData.lifeCount,
         timeLeft: gameData.timeCount
       };
       renderTemplate(result(playerResult));
+      restartGame();
     }
   }
 };

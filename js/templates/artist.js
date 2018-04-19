@@ -8,9 +8,9 @@ const renderArtistItems = (itemsNum) => {
     <div class="main-answer-wrapper">
       <input class="main-answer-r" type="radio" id="answer-${artistNum + 1}" name="answer" value="val-${artistNum + 1}"/>
       <label class="main-answer" for="answer-${artistNum + 1}">
-        <img class="main-answer-preview" src="${levels[`level-` + gameData.level].artistList[artistNum].image}"
-            alt="${levels[`level-` + gameData.level].artistList[artistNum].artist}" width="134" height="134">
-        ${levels[`level-` + gameData.level].artistList[artistNum].artist}
+        <img class="main-answer-preview" src="${levels[gameData.level - 1].artistList[artistNum].image}"
+            alt="${levels[gameData.level - 1].artistList[artistNum].artist}" width="134" height="134">
+        ${levels[gameData.level - 1].artistList[artistNum].artist}
       </label>
     </div>
   `;
@@ -28,7 +28,7 @@ export const artist = () => createTemplate(`
       <h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">
         <div class="player">
-          <audio src="${levels[`level-` + gameData.level].correctAnswerSrc}"></audio>
+          <audio src="${levels[gameData.level - 1].correctAnswerSrc}"></audio>
           <button class="player-control"></button>
           <div class="player-track">
             <span class="player-status"></span>
@@ -46,7 +46,7 @@ export const initArtistEvents = () => {
   const answers = document.querySelectorAll(`.main-answer-preview`);
   answers.forEach((answer) => {
     answer.addEventListener(`click`, () => {
-      if (answer.getAttribute(`alt`) === levels[`level-${gameData.level}`].correctAnswerArtist) {
+      if (answer.getAttribute(`alt`) === levels[gameData.level - 1].correctAnswerArtist) {
         gameData.answerCount++;
         gameData.points += gameData.answerReward;
       } else {
@@ -59,7 +59,7 @@ export const initArtistEvents = () => {
         }
       }
       gameData.level++;
-      goToNextLevel(levels[`level-${gameData.level}`].levelType);
+      goToNextLevel(levels[gameData.level - 1].levelType);
     });
   });
 
