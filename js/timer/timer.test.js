@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import addTimer from './timer.js';
+import addTimer from './timer';
 
 const testTimer = addTimer(3);
 

@@ -1,4 +1,6 @@
-import welcome from './templates/welcome';
+import {welcome, initWelcomeEvents} from './templates/welcome';
 import renderTemplate from './templates/render_template';
+import {gameData} from './data/data';
 
-renderTemplate(welcome);
+renderTemplate(welcome(gameData));
+initWelcomeEvents();

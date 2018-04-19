@@ -1,6 +1,4 @@
 import createTemplate from './create_template';
-import renderTemplate from './render_template';
-import welcome from './welcome';
 
 const resultLose = createTemplate(`
   <section class="main main--result">
@@ -11,11 +9,5 @@ const resultLose = createTemplate(`
     <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
   </section>
 `);
-
-document.addEventListener(`click`, (ect) => {
-  if (ect.target.classList.contains(`main-replay`)) {
-    renderTemplate(welcome);
-  }
-});
 
 export default resultLose;

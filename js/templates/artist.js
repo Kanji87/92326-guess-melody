@@ -1,82 +1,67 @@
 import createTemplate from './create_template';
-import renderTemplate from './render_template';
-import genre from './genre';
+import timerTemplate from './timer';
+import {gameData, levels, goToNextLevel} from '../data/data';
+import {initAudioPlayer} from '../utils/utils';
 
-const artist = createTemplate(`
-  <section class="main main--level main--level-artist">
-    <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-      <circle
-        cx="390" cy="390" r="370"
-        class="timer-line"
-        style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
-
-      <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-        <span class="timer-value-mins">05</span><!--
-        --><span class="timer-value-dots">:</span><!--
-        --><span class="timer-value-secs">00</span>
-      </div>
-    </svg>
-    <div class="main-mistakes">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
+const renderArtistItems = (itemsNum) => {
+  const artistAnswerItem = (artistNum) => `
+    <div class="main-answer-wrapper">
+      <input class="main-answer-r" type="radio" id="answer-${artistNum + 1}" name="answer" value="val-${artistNum + 1}"/>
+      <label class="main-answer" for="answer-${artistNum + 1}">
+        <img class="main-answer-preview" src="${levels[gameData.level - 1].artistList[artistNum].image}"
+            alt="${levels[gameData.level - 1].artistList[artistNum].artist}" width="134" height="134">
+        ${levels[gameData.level - 1].artistList[artistNum].artist}
+      </label>
     </div>
+  `;
+  let artistsNode = ``;
+  for (let i = 0; i < itemsNum; i++) {
+    artistsNode += artistAnswerItem(i);
+  }
+  return artistsNode;
+};
 
+export const artist = () => createTemplate(`
+  <section class="main main--level main--level-artist">
+    ${timerTemplate}
     <div class="main-wrap">
       <h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">
         <div class="player">
-          <audio></audio>
-          <button class="player-control player-control--pause"></button>
+          <audio src="${levels[gameData.level - 1].correctAnswerSrc}"></audio>
+          <button class="player-control"></button>
           <div class="player-track">
             <span class="player-status"></span>
           </div>
         </div>
       </div>
       <form class="main-list">
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-1" name="answer" value="val-1"/>
-          <label class="main-answer" for="answer-1">
-            <img class="main-answer-preview" src="http://placehold.it/134x134"
-                alt="Пелагея" width="134" height="134">
-            Пелагея
-          </label>
-        </div>
-
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-2"/>
-          <label class="main-answer" for="answer-2">
-            <img class="main-answer-preview" src="http://placehold.it/134x134"
-                alt="Краснознаменная дивизия имени моей бабушки" width="134" height="134">
-            Краснознаменная дивизия имени моей бабушки
-          </label>
-        </div>
-
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-3" name="answer" value="val-3"/>
-          <label class="main-answer" for="answer-3">
-            <img class="main-answer-preview" src="http://placehold.it/134x134"
-                alt="Lorde" width="134" height="134">
-            Lorde
-          </label>
-        </div>
+        ${renderArtistItems(3)}
       </form>
     </div>
   </section>
 `);
 
-document.addEventListener(`click`, (evt) => {
-  if (evt.target.closest(`.main-answer`)) {
-    renderTemplate(genre);
-
-    const answerButton = document.querySelector(`.genre-answer-send`);
-    answerButton.setAttribute(`disabled`, `disabled`);
-
-    document.addEventListener(`click`, (answerEvt) => {
-      if (answerEvt.target.closest(`.genre-answer`)) {
-        answerButton.removeAttribute(`disabled`);
+export const initArtistEvents = () => {
+  const answers = document.querySelectorAll(`.main-answer-preview`);
+  answers.forEach((answer) => {
+    answer.addEventListener(`click`, () => {
+      if (answer.getAttribute(`alt`) === levels[gameData.level - 1].correctAnswerArtist) {
+        gameData.answerCount++;
+        gameData.points += gameData.answerReward;
+      } else {
+        if (gameData.points === 0) {
+          gameData.points = gameData.points;
+          gameData.lifeCount -= 1;
+        } else {
+          gameData.points -= 1;
+          gameData.lifeCount -= 1;
+        }
       }
+      gameData.level++;
+      goToNextLevel(levels[gameData.level - 1].levelType);
     });
-  }
-});
+  });
 
-export default artist;
+  initAudioPlayer();
+};
