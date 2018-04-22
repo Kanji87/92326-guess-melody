@@ -1,6 +1,5 @@
 import AbstractView from "./abstract_view";
 import {gameData, levels} from '../data/data';
-import timerTemplate from '../templates/timer';
 
 const renderGenreItems = (itemsNum) => {
   const genreAnswerItem = (genreNum) => `
@@ -29,7 +28,6 @@ export default class GenreView extends AbstractView {
   get template() {
     return `
       <section class="main main--level main--level-genre">
-        ${timerTemplate}
         <div class="main-wrap">
           <h2 class="title">Выберите ${levels[gameData.level - 1].correctAnswerGenre} треки</h2>
           <form class="genre">
@@ -44,7 +42,7 @@ export default class GenreView extends AbstractView {
   onGenreSelect() {
   }
 
-  onSubmit(genre) {
+  onSubmit() {
   }
 
   bind() {

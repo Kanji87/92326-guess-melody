@@ -1,16 +1,14 @@
-import renderTemplate from './templates/render_template';
+import renderTimer from './templates/timer';
 import WelcomeView from './views/welcome_view';
 import ArtistView from './views/artist_view';
 import GenreView from './views/genre_view';
 import ResultView from './views/result_view';
 import renderLifebar from './templates/lifebar';
 import {levels, gameData} from './data/data';
-import {initAudioPlayer} from './utils/utils';
+import {initAudioPlayer, renderTemplate} from './utils/utils';
 import LoseView from './views/lose_view';
 
 const welcomeView = new WelcomeView();
-// const artistView = new ArtistView();
-// const genreView = new GenreView();
 
 const getLevel = () => gameData.level;
 
@@ -34,6 +32,7 @@ const goToNextLevel = (levelType) => {
       const genreView = new GenreView();
       renderTemplate(genreView.element);
       renderLifebar();
+      renderTimer();
       initAudioPlayer();
 
       genreView.onGenreSelect = () => {
@@ -80,6 +79,7 @@ const goToNextLevel = (levelType) => {
       const artistView = new ArtistView(getLevel());
       renderTemplate(artistView.element);
       renderLifebar();
+      renderTimer();
       initAudioPlayer();
 
       artistView.onAnswerClick = (answerText) => {
@@ -112,5 +112,4 @@ renderTemplate(welcomeView.element);
 
 welcomeView.onPlayClick = () => {
   goToNextLevel(levels[gameData.level - 1].levelType);
-  renderLifebar();
 };

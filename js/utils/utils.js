@@ -13,6 +13,18 @@ export const getRandomItems = (num, arr) => {
   return itemsArray;
 };
 
+export const createTemplate = (templateString) => {
+  const dummyWrap = document.createElement(`div`);
+  dummyWrap.innerHTML = templateString.trim();
+  return dummyWrap.firstChild;
+};
+
+export const renderTemplate = (domNode) => {
+  const mainSection = document.querySelector(`.main`);
+  mainSection.innerHTML = ``;
+  mainSection.appendChild(domNode);
+};
+
 export const initAudioPlayer = () => {
   const playButtons = document.querySelectorAll(`.player-control`);
   playButtons.forEach((playButton) => {

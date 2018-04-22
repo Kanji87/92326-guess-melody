@@ -1,6 +1,4 @@
-import createTemplate from './create_template';
-// import renderTemplate from './render_template';
-// import welcome from './welcome';
+import {createTemplate} from '../utils/utils';
 
 const resultTimeout = createTemplate(`
   <section class="main main--result">

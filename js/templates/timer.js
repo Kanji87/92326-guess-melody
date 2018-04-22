@@ -1,4 +1,9 @@
+import {createTemplate} from '../utils/utils';
+
+const mainWrap = document.querySelector(`.app .main`);
+
 const timerTemplate = `
+  <div>
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
     <circle
     cx="390" cy="390" r="370"
@@ -11,6 +16,11 @@ const timerTemplate = `
     --><span class="timer-value-secs">00</span>
     </div>
     </svg>
+  </div>
 `;
 
-export default timerTemplate;
+const renderTimer = () => {
+  mainWrap.querySelector(`.main`).insertBefore(createTemplate(timerTemplate), mainWrap.querySelector(`.main-wrap`));
+};
+
+export default renderTimer;

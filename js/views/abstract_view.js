@@ -1,8 +1,4 @@
-const createTemplate = (templateString) => {
-  const dummyWrap = document.createElement(`div`);
-  dummyWrap.innerHTML = templateString.trim();
-  return dummyWrap.firstChild;
-};
+import {createTemplate} from '../utils/utils';
 
 export default class AbstractView {
   constructor() {
@@ -19,7 +15,7 @@ export default class AbstractView {
     return createTemplate(this.template);
   }
 
-  bind(element) {
+  bind() {
     // тут будем задавать события для вьюх
   }
 

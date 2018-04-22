@@ -1,4 +1,4 @@
-import createTemplate from './create_template';
+import {createTemplate} from '../utils/utils';
 import {gameData} from '../data/data';
 
 const mainWrap = document.querySelector(`.app .main`);
