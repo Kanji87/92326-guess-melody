@@ -1,8 +1,8 @@
-import {createTemplate} from '../utils/utils';
+import Utils from '../utils/utils';
 import {gameData} from '../data/data';
 
 const mainWrap = document.querySelector(`.app .main`);
-const lifebar = (lifesLeft) => createTemplate(`
+const lifebar = (lifesLeft) => Utils._createTemplate(`
 <div class="main-mistakes">
   ${new Array(lifesLeft).fill(`
   <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`).join(``)}

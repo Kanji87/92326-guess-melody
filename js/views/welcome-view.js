@@ -1,5 +1,5 @@
 import {gameData} from '../data/data';
-import AbstractView from './abstract_view';
+import AbstractView from './abstract-view';
 
 export default class WelcomeView extends AbstractView {
   get template() {

@@ -1,4 +1,4 @@
-import AbstractView from "./abstract_view";
+import AbstractView from "./abstract-view";
 import showPlayerResult from '../player_result/player_result';
 
 export default class ResultView extends AbstractView {

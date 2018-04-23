@@ -1,4 +1,4 @@
-import AbstractView from "./abstract_view";
+import AbstractView from "./abstract-view";
 import {levels} from '../data/data';
 
 export default class ArtistView extends AbstractView {

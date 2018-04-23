@@ -1,4 +1,4 @@
-import {createTemplate} from '../utils/utils';
+import Utils from '../utils/utils';
 
 export default class AbstractView {
   constructor() {
@@ -12,7 +12,7 @@ export default class AbstractView {
   }
 
   render() {
-    return createTemplate(this.template);
+    return Utils._createTemplate(this.template);
   }
 
   bind() {

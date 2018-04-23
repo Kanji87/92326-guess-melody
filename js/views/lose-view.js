@@ -1,4 +1,4 @@
-import AbstractView from "./abstract_view";
+import AbstractView from "./abstract-view";
 
 export default class LoseView extends AbstractView {
   get template() {

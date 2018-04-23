@@ -1,4 +1,4 @@
-import {createTemplate} from '../utils/utils';
+import Utils from '../utils/utils';
 
 const mainWrap = document.querySelector(`.app .main`);
 
@@ -20,7 +20,7 @@ const timerTemplate = `
 `;
 
 const renderTimer = () => {
-  mainWrap.querySelector(`.main`).insertBefore(createTemplate(timerTemplate), mainWrap.querySelector(`.main-wrap`));
+  mainWrap.querySelector(`.main`).insertBefore(Utils._createTemplate(timerTemplate), mainWrap.querySelector(`.main-wrap`));
 };
 
 export default renderTimer;

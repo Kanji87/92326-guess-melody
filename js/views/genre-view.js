@@ -1,4 +1,4 @@
-import AbstractView from "./abstract_view";
+import AbstractView from "./abstract-view";
 import {gameData, levels} from '../data/data';
 
 export default class GenreView extends AbstractView {
