@@ -14,19 +14,19 @@ export default class Utils {
     return itemsArray;
   }
 
-  static _createTemplate(templateString) {
+  static createTemplate(templateString) {
     const dummyWrap = document.createElement(`div`);
     dummyWrap.innerHTML = templateString.trim();
     return dummyWrap.firstChild;
   }
 
-  static _renderTemplate(domNode) {
+  static renderTemplate(domNode) {
     const mainSection = document.querySelector(`.main`);
     mainSection.innerHTML = ``;
     mainSection.appendChild(domNode);
   }
 
-  static _initAudioPlayer() {
+  static initAudioPlayer() {
     const playButtons = document.querySelectorAll(`.player-control`);
     playButtons.forEach((playButton) => {
       playButton.addEventListener(`click`, (evt) => {

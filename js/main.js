@@ -17,15 +17,15 @@ const restartGame = () => {
   gameData.points = 0;
   gameData.lifeCount = 3;
   gameData.timeCount = 5;
-  Utils._renderTemplate(welcomeView.element);
+  Utils.renderTemplate(welcomeView.element);
 };
 
 const showGenreScreen = () => {
   const genreView = new GenreView();
-  Utils._renderTemplate(genreView.element);
+  Utils.renderTemplate(genreView.element);
   renderLifebar();
   renderTimer();
-  Utils._initAudioPlayer();
+  Utils.initAudioPlayer();
 
   genreView.onGenreSelect = () => {
     const submitButton = document.querySelector(`.genre-answer-send`);
@@ -63,10 +63,10 @@ const showGenreScreen = () => {
 
 const showArtistScreen = () => {
   const artistView = new ArtistView(getLevel());
-  Utils._renderTemplate(artistView.element);
+  Utils.renderTemplate(artistView.element);
   renderLifebar();
   renderTimer();
-  Utils._initAudioPlayer();
+  Utils.initAudioPlayer();
 
   artistView.onAnswerClick = (answerText) => {
     if (answerText === levels[gameData.level - 1].correctAnswerArtist) {
@@ -89,7 +89,7 @@ const showArtistScreen = () => {
 const goToNextLevel = (levelType) => {
   if (gameData.lifeCount < 0) {
     const result = new LoseView(gameData);
-    Utils._renderTemplate(result.element);
+    Utils.renderTemplate(result.element);
     result.onReplayClick = () => {
       restartGame();
     };
@@ -101,14 +101,14 @@ const goToNextLevel = (levelType) => {
     showArtistScreen();
   } else if (gameData.level > levels.length) {
     const result = new ResultView(gameData);
-    Utils._renderTemplate(result.element);
+    Utils.renderTemplate(result.element);
     result.onReplayClick = () => {
       restartGame();
     };
   }
 };
 
-Utils._renderTemplate(welcomeView.element);
+Utils.renderTemplate(welcomeView.element);
 
 welcomeView.onPlayClick = () => {
   goToNextLevel(levels[gameData.level - 1].levelType);

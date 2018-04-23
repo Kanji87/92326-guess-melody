@@ -20,7 +20,7 @@ const timerTemplate = `
 `;
 
 const renderTimer = () => {
-  mainWrap.querySelector(`.main`).insertBefore(Utils._createTemplate(timerTemplate), mainWrap.querySelector(`.main-wrap`));
+  mainWrap.querySelector(`.main`).insertBefore(Utils.createTemplate(timerTemplate), mainWrap.querySelector(`.main-wrap`));
 };
 
 export default renderTimer;
