@@ -11,9 +11,9 @@ const playerPlaceEndings = (num) => {
 };
 
 const showPlayerResult = (arr, playerResult) => {
-  if (playerResult.lifeLeft === 0) {
+  if (playerResult.lifeCount === 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
-  } else if (playerResult.timeLeft === 0) {
+  } else if (playerResult.timeCount === 0) {
     return `Время вышло! Вы не успели отгадать все мелодии`;
   } else {
     const results = [...arr];

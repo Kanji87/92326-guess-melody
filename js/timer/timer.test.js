@@ -1,7 +1,7 @@
 import {expect} from 'chai';
-import addTimer from './timer';
+import Timer from './timer';
 
-const testTimer = addTimer(3);
+const testTimer = new Timer(3);
 
 describe(`timer function`, () => {
   it(`expect to return 3 sec left`, () => {
