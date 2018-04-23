@@ -3,28 +3,28 @@ import showPlayerResult from './player_result';
 
 const testPlayerResult1 = {
   points: 20,
-  lifeLeft: 2,
-  timeLeft: 10
+  lifeCount: 2,
+  timeCount: 10
 };
 const testPlayerResult2 = {
   points: 14,
-  lifeLeft: 1,
-  timeLeft: 10
+  lifeCount: 1,
+  timeCount: 10
 };
 const testPlayerResult3 = {
   points: 16,
-  lifeLeft: 1,
-  timeLeft: 10
+  lifeCount: 1,
+  timeCount: 10
 };
 const losePlayerResult = {
   points: 5,
-  lifeLeft: 0,
-  timeLeft: 40
+  lifeCount: 0,
+  timeCount: 40
 };
-const timeleftPlayerResult = {
+const timeCountPlayerResult = {
   points: 15,
-  lifeLeft: 2,
-  timeLeft: 0
+  lifeCount: 2,
+  timeCount: 0
 };
 
 const testResults1 = [20, 15, 1, 6, 12, 18];
@@ -44,8 +44,8 @@ describe(`playerResult function`, () => {
   it(`expect lose string`, () => {
     expect(showPlayerResult(testResults1, losePlayerResult)).to.have.string(resultStrings.lifeEnded);
   });
-  it(`expect timeleft string`, () => {
-    expect(showPlayerResult(testResults1, timeleftPlayerResult)).to.have.string(resultStrings.timeEnded);
+  it(`expect timeCount string`, () => {
+    expect(showPlayerResult(testResults1, timeCountPlayerResult)).to.have.string(resultStrings.timeEnded);
   });
   it(`expect win string`, () => {
     expect(showPlayerResult(testResults1, testPlayerResult2)).to.be.a.string(resultStrings.fourthPlace);

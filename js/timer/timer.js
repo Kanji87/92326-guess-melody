@@ -12,3 +12,12 @@ const addTimer = (gameTime) => {
 };
 
 export default addTimer;
+
+// const addTimer = (gameTime) => {
+//   return {
+//     timeNum: gameTime,
+//     tick: function () {
+//       return this.timeNum < 0 ? -1 : this.timeNum--;
+//     }
+//   };
+// };

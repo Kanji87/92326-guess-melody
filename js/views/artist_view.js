@@ -1,17 +1,6 @@
 import AbstractView from "./abstract_view";
 import {levels} from '../data/data';
 
-const artistAnswerItem = (level, index) => `
-  <div class="main-answer-wrapper">
-    <input class="main-answer-r" type="radio" id="answer-${index + 1}" name="answer" value="val-${index + 1}"/>
-    <label class="main-answer" for="answer-${index + 1}">
-      <img class="main-answer-preview" src="${level.image}"
-          alt="${level.artist}" width="134" height="134">
-      ${level.artist}
-    </label>
-  </div>
-`;
-
 export default class ArtistView extends AbstractView {
   constructor(level) {
     super();
@@ -33,7 +22,7 @@ export default class ArtistView extends AbstractView {
             </div>
           </div>
           <form class="main-list">
-            ${levels[this.level - 1].artistList.map((level, index) => artistAnswerItem(level, index)).join(``)}
+            ${levels[this.level - 1].artistList.map((level, index) => ArtistView._artistAnswerItem(level, index)).join(``)}
           </form>
         </div>
       </section>
@@ -51,5 +40,18 @@ export default class ArtistView extends AbstractView {
       const answerText = answer.getAttribute(`alt`);
       this.onAnswerClick(answerText);
     });
+  }
+
+  static _artistAnswerItem(level, index) {
+    return `
+      <div class="main-answer-wrapper">
+        <input class="main-answer-r" type="radio" id="answer-${index + 1}" name="answer" value="val-${index + 1}"/>
+        <label class="main-answer" for="answer-${index + 1}">
+          <img class="main-answer-preview" src="${level.image}"
+              alt="${level.artist}" width="134" height="134">
+          ${level.artist}
+        </label>
+      </div>
+    `;
   }
 }
