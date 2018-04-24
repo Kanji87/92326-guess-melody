@@ -1,12 +1,6 @@
-export const gameData = {
-  lifeCount: 3,
-  timeCount: 5,
-  level: 1,
-  answerReward: 1,
-  answerCount: 0,
-  fastAnswerReward: 2,
-  fastAnswerCount: 0,
-  points: 0
+export const GameData = {
+  ANSWER_REWARD: 1,
+  FAST_ANSWER_REWARD: 2
 };
 
 export const levels = [

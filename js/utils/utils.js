@@ -20,10 +20,9 @@ export default class Utils {
     return dummyWrap.firstChild;
   }
 
-  static renderTemplate(domNode) {
-    const mainSection = document.querySelector(`.main`);
-    mainSection.innerHTML = ``;
-    mainSection.appendChild(domNode);
+  static renderTemplate(node, rootNode) {
+    rootNode.innerHTML = ``;
+    rootNode.appendChild(node);
   }
 
   static initAudioPlayer() {

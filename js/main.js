@@ -1,3 +1,9 @@
+import App from './app/app';
+
+App.showWelcome();
+
+/*
+
 import renderTimer from './templates/timer';
 import WelcomeView from './views/welcome-view';
 import ArtistView from './views/artist-view';
@@ -113,3 +119,5 @@ Utils.renderTemplate(welcomeView.element);
 welcomeView.onPlayClick = () => {
   goToNextLevel(levels[gameData.level - 1].levelType);
 };
+
+*/
