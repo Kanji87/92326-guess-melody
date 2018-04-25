@@ -2,7 +2,9 @@ import TimerView from '../views/timer-view';
 import LifebarView from '../views/lifebar-view';
 import ArtistView from '../views/artist-view';
 import GenreView from '../views/genre-view';
+import ResultView from '../views/result-view';
 import LoseView from '../views/lose-view';
+import TimeoutView from '../views/timeout-view';
 
 export default class GameScreen {
   constructor(model) {
@@ -34,12 +36,15 @@ export default class GameScreen {
     clearInterval(this._interval);
   }
 
-  restartGame() {
-    this.model.restart();
-    this.goToNextLevel();
-  }
-
   updateTimer() {
+    if (this.model.isTimeEnd) {
+      this.stopGame();
+      const result = new TimeoutView();
+      this.gameContent.innerHTML = ``;
+      this.gameContent.appendChild(result.element);
+      // this.model.reset();
+      return;
+    }
     const timer = new TimerView(this.model.state);
     this.gameContent.replaceChild(timer.element, this.timer.element);
     this.timer = timer;
@@ -51,29 +56,52 @@ export default class GameScreen {
     this.lifebar = lifebar;
   }
 
+  static _initAudioPlayer(element) {
+    const playButtons = element.querySelectorAll(`.player-control`);
+    playButtons.forEach((playButton) => {
+      playButton.addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        const audio = evt.target.closest(`.player`).querySelector(`audio`);
+        const audioPlayers = element.querySelectorAll(`audio`);
+        if (audio.paused) {
+          audioPlayers.forEach((audioPlayer) => {
+            audioPlayer.pause();
+            audioPlayer.closest(`.player`).querySelector(`.player-control`).classList.remove(`player-control--pause`);
+          });
+          audio.play();
+          playButton.classList.add(`player-control--pause`);
+        } else {
+          audio.pause();
+          playButton.classList.remove(`player-control--pause`);
+        }
+      });
+    });
+  }
+
   checkAnswer(answer) {
-    console.log(this.model.isLifeEnd);
+    if (answer) {
+      this.model.state.points += this._answerReward;
+    } else {
+      this.model.state.points -= 1;
+      this.model.state.lifeCount -= 1;
+    }
     if (this.model.isLifeEnd) {
       this.stopGame();
       const result = new LoseView();
       this.gameContent.innerHTML = ``;
       this.gameContent.appendChild(result.element);
+      // this.model.reset();
       return;
     }
     if (this.model.hasNextLevel) {
-      if (answer) {
-        this.model.state.points += this._answerReward;
-      } else {
-        this.model.state.points -= 1;
-        this.model.state.lifeCount -= 1;
-      }
       this.stopGame();
       this.model.increaseLevel();
       this.goToNextLevel();
-      console.log(answer);
-      console.log(this.model.state);
     } else {
-      console.log(`you win`);
+      this.stopGame();
+      const result = new ResultView(this.model.state);
+      this.gameContent.innerHTML = ``;
+      this.gameContent.appendChild(result.element);
       return;
     }
   }
@@ -81,6 +109,7 @@ export default class GameScreen {
   goToNextLevel() {
     this.changeLevel();
     this.updateLifebar();
+    GameScreen._initAudioPlayer(this.content.element);
     this._interval = setInterval(() => {
       this.model.runOneTick();
       this.updateTimer();
