@@ -7,44 +7,16 @@ export default class Utils {
     return a;
   }
 
-  static _getRandomItems(num, arr) {
+  static getRandomItems(num, arr) {
     let itemsArray = [...arr];
     Utils._shuffle(itemsArray);
     itemsArray = itemsArray.slice(0, num);
     return itemsArray;
   }
 
-  static _createTemplate(templateString) {
+  static createTemplate(templateString) {
     const dummyWrap = document.createElement(`div`);
     dummyWrap.innerHTML = templateString.trim();
     return dummyWrap.firstChild;
-  }
-
-  static _renderTemplate(domNode) {
-    const mainSection = document.querySelector(`.main`);
-    mainSection.innerHTML = ``;
-    mainSection.appendChild(domNode);
-  }
-
-  static _initAudioPlayer() {
-    const playButtons = document.querySelectorAll(`.player-control`);
-    playButtons.forEach((playButton) => {
-      playButton.addEventListener(`click`, (evt) => {
-        evt.preventDefault();
-        const audio = evt.target.closest(`.player`).querySelector(`audio`);
-        const audioPlayers = document.querySelectorAll(`audio`);
-        if (audio.paused) {
-          audioPlayers.forEach((audioPlayer) => {
-            audioPlayer.pause();
-            audioPlayer.closest(`.player`).querySelector(`.player-control`).classList.remove(`player-control--pause`);
-          });
-          audio.play();
-          playButton.classList.add(`player-control--pause`);
-        } else {
-          audio.pause();
-          playButton.classList.remove(`player-control--pause`);
-        }
-      });
-    });
   }
 }

@@ -12,12 +12,10 @@ export default class AbstractView {
   }
 
   render() {
-    return Utils._createTemplate(this.template);
+    return Utils.createTemplate(this.template);
   }
 
-  bind() {
-    // тут будем задавать события для вьюх
-  }
+  bind() {}
 
   get element() {
     if (this._element) {

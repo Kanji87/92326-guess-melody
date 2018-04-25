@@ -1,10 +1,10 @@
-import AbstractView from "./abstract-view";
-import {levels} from '../data/data';
+import AbstractView from './abstract-view';
+import levels from '../data/data';
 
 export default class ArtistView extends AbstractView {
-  constructor(level) {
+  constructor(state) {
     super();
-    this.level = level;
+    this.level = state.level;
   }
 
   get template() {
@@ -29,8 +29,7 @@ export default class ArtistView extends AbstractView {
     `;
   }
 
-  onAnswerClick() {
-  }
+  onAnswer(answer) {}
 
   bind() {
     const answersNode = this.element.querySelector(`.main-list`);
@@ -38,7 +37,11 @@ export default class ArtistView extends AbstractView {
       evt.preventDefault();
       const answer = evt.target.closest(`.main-answer-wrapper`).querySelector(`.main-answer-preview`);
       const answerText = answer.getAttribute(`alt`);
-      this.onAnswerClick(answerText);
+      if (answerText === levels[this.level - 1].correctAnswerArtist) {
+        this.onAnswer(true);
+      } else {
+        this.onAnswer(false);
+      }
     });
   }
 
