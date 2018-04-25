@@ -8,7 +8,7 @@ export default class GameScreen {
     this.model = model;
     this.timer = new TimerView(this.model.state);
     this.lifebar = new LifebarView(this.model.state);
-    this.content = this.model.state.level % 2 !== 0 ? new ArtistView(this.model.state) : new GenreView(this.model.state);
+    this.content = this.isArtistLevel !== 0 ? new ArtistView(this.model.state) : new GenreView(this.model.state);
 
     this.gameContent = document.createElement(`div`);
     this.gameContent.classList.add(`main`);
@@ -27,7 +27,7 @@ export default class GameScreen {
     clearInterval(this._interval);
   }
 
-  startGame() {
+  goToNextLevel() {
     this.changeLevel();
     this._interval = setInterval(() => {
       this.model.runOneTick();
@@ -37,7 +37,7 @@ export default class GameScreen {
 
   restartGame() {
     this.model.restart();
-    this.startTimer();
+    this.goToNextLevel();
   }
 
   updateTimer() {
@@ -46,21 +46,26 @@ export default class GameScreen {
     this.timer = timer;
   }
 
-  answer(answer) {
+  checkAnswer(answer) {
     this.stopGame();
-    this.model.goToNextLevel();
-    this.startGame();
+    this.model.increaseLevel();
+    this.goToNextLevel();
+    console.log(answer);
+    console.log(this.model.state);
   }
 
   changeLevel() {
-    const level = this.model.state.level % 2 !== 0 ? new ArtistView(this.model.state) : new GenreView(this.model.state);
-    console.log(level);
-    level.onAnswer = this.answer.bind(this);
+    const level = this.isArtistLevel ? new ArtistView(this.model.state) : new GenreView(this.model.state);
+    level.onAnswer = this.checkAnswer.bind(this);
     this.changeView(level);
   }
 
   changeView(view) {
     this.gameContent.replaceChild(view.element, this.content.element);
     this.content = view;
+  }
+
+  get isArtistLevel() {
+    return this.model.state.level % 2 !== 0;
   }
 }

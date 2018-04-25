@@ -34,7 +34,16 @@ export default class GenreView extends AbstractView {
 
     submitButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      this.onAnswer(correctGenre);
+      const answers = this.element.querySelectorAll(`.genre-answer input:checked`);
+      let isCorrect = false;
+      answers.forEach((answer) => {
+        isCorrect = answer.value === correctGenre ? true : false;
+      });
+      if (isCorrect) {
+        this.onAnswer(true);
+      } else {
+        this.onAnswer(false);
+      }
     });
   }
 

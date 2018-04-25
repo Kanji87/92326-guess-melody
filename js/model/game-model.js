@@ -20,7 +20,7 @@ export default class GameModel {
     return levels[this._state.level] !== void 0;
   }
 
-  goToNextLevel() {
+  increaseLevel() {
     return this._state.level++;
   }
 

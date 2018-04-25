@@ -29,7 +29,7 @@ export default class ArtistView extends AbstractView {
     `;
   }
 
-  onAnswer(answerText) {}
+  onAnswer(answer) {}
 
   bind() {
     const answersNode = this.element.querySelector(`.main-list`);
@@ -37,7 +37,11 @@ export default class ArtistView extends AbstractView {
       evt.preventDefault();
       const answer = evt.target.closest(`.main-answer-wrapper`).querySelector(`.main-answer-preview`);
       const answerText = answer.getAttribute(`alt`);
-      this.onAnswer(answerText);
+      if (answerText === levels[this.level - 1].correctAnswerArtist) {
+        this.onAnswer(true);
+      } else {
+        this.onAnswer(false);
+      }
     });
   }
 

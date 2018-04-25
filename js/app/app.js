@@ -17,6 +17,6 @@ export default class App {
   static runGame() {
     const gameScreen = new GameScreen(new GameModel());
     changeViewTo(gameScreen.element);
-    gameScreen.startGame();
+    gameScreen.goToNextLevel();
   }
 }
