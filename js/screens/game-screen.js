@@ -54,8 +54,10 @@ export default class GameScreen {
   checkAnswer(answer) {
     console.log(this.model.isLifeEnd);
     if (this.model.isLifeEnd) {
+      this.stopGame();
       const result = new LoseView();
-      this.changeView(result);
+      this.gameContent.innerHTML = ``;
+      this.gameContent.appendChild(result.element);
       return;
     }
     if (this.model.hasNextLevel) {
