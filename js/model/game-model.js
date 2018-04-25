@@ -16,7 +16,7 @@ export default class GameModel {
     this._state = INITIAL_STATE;
   }
 
-  hasNextLevel() {
+  get hasNextLevel() {
     return levels[this._state.level] !== void 0;
   }
 
@@ -40,8 +40,8 @@ export default class GameModel {
     return levels[this._state.level - 1];
   }
 
-  isLifeLeft() {
-    return this._state.lifeCount > 0;
+  get isLifeEnd() {
+    return this._state.lifeCount <= 0;
   }
 
   tick(stateObj) {

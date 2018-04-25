@@ -2,7 +2,7 @@ import TimerView from '../views/timer-view';
 import LifebarView from '../views/lifebar-view';
 import ArtistView from '../views/artist-view';
 import GenreView from '../views/genre-view';
-import GameData from '../views/genre-view';
+import LoseView from '../views/lose-view';
 
 export default class GameScreen {
   constructor(model) {
@@ -26,17 +26,12 @@ export default class GameScreen {
     return this.gameContent;
   }
 
-  stopGame() {
-    clearInterval(this._interval);
+  get isArtistLevel() {
+    return this.model.state.level % 2 !== 0;
   }
 
-  goToNextLevel() {
-    this.changeLevel();
-    this.updateLifebar();
-    this._interval = setInterval(() => {
-      this.model.runOneTick();
-      this.updateTimer();
-    }, 1000);
+  stopGame() {
+    clearInterval(this._interval);
   }
 
   restartGame() {
@@ -57,17 +52,37 @@ export default class GameScreen {
   }
 
   checkAnswer(answer) {
-    if (answer) {
-      this.model.state.points += this._answerReward;
-    } else {
-      this.model.state.points -= 1;
-      this.model.state.lifeCount -= 1;
+    console.log(this.model.isLifeEnd);
+    if (this.model.isLifeEnd) {
+      const result = new LoseView();
+      this.changeView(result);
+      return;
     }
-    this.stopGame();
-    this.model.increaseLevel();
-    this.goToNextLevel();
-    console.log(answer);
-    console.log(this.model.state);
+    if (this.model.hasNextLevel) {
+      if (answer) {
+        this.model.state.points += this._answerReward;
+      } else {
+        this.model.state.points -= 1;
+        this.model.state.lifeCount -= 1;
+      }
+      this.stopGame();
+      this.model.increaseLevel();
+      this.goToNextLevel();
+      console.log(answer);
+      console.log(this.model.state);
+    } else {
+      console.log(`you win`);
+      return;
+    }
+  }
+
+  goToNextLevel() {
+    this.changeLevel();
+    this.updateLifebar();
+    this._interval = setInterval(() => {
+      this.model.runOneTick();
+      this.updateTimer();
+    }, 1000);
   }
 
   changeLevel() {
@@ -79,9 +94,5 @@ export default class GameScreen {
   changeView(view) {
     this.gameContent.replaceChild(view.element, this.content.element);
     this.content = view;
-  }
-
-  get isArtistLevel() {
-    return this.model.state.level % 2 !== 0;
   }
 }
