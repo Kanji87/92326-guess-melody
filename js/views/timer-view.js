@@ -3,7 +3,8 @@ import AbstractView from '../views/abstract-view';
 export default class TimerView extends AbstractView {
   constructor(state) {
     super();
-    this.timeLeft = state.timeCount;
+    this.minutesLeft = state.timeCount.minutes;
+    this.secondsLeft = state.timeCount.seconds;
   }
 
   get template() {
@@ -16,9 +17,9 @@ export default class TimerView extends AbstractView {
         style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
     
         <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-        <span class="timer-value-mins">${this.timeLeft}</span><!--
+        <span class="timer-value-mins">${this.minutesLeft}</span><!--
         --><span class="timer-value-dots">:</span><!--
-        --><span class="timer-value-secs">00</span>
+        --><span class="timer-value-secs">${this.secondsLeft}</span>
         </div>
         </svg>
       </div>

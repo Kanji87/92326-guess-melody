@@ -14,7 +14,7 @@ export default class ResultView extends AbstractView {
         <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
     
         <h2 class="title">Вы настоящий меломан!</h2>
-        <div class="main-stat">За&nbsp;3&nbsp;минуты и 25&nbsp;секунд
+        <div class="main-stat">За&nbsp;${4 - this.data.timeCount.minutes}&nbsp;минуты и ${60 - this.data.timeCount.seconds}&nbsp;секунд
           <br>вы&nbsp;набрали ${this.data.points} баллов (${this.data.fastAnswerCount} быстрых)
           <br>совершив ${3 - this.data.lifeCount} ошибки</div>
         <span class="main-comparison">${ResultView._showPlayerResult(this._testResults1, this.data)}</span>

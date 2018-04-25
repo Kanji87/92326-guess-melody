@@ -13,16 +13,13 @@ export default class WelcomeView extends AbstractView {
         <button class="main-play">Начать игру</button>
         <h2 class="title main-title">Правила игры</h2>
         <p class="text main-text">
-          Правила просты&nbsp;— за&nbsp;${this.state.timeCount} минут ответить на все вопросы.<br>
+          Правила просты&nbsp;— за&nbsp;${this.state.timeCount.minutes} минут ответить на все вопросы.<br>
           Ошибиться можно ${this.state.lifeCount} раза.<br>
           Удачи!
         </p>
       </section>
     `;
   }
-
-  // onPlayClick() {
-  // }
 
   bind() {
     const playButton = this.element.querySelector(`.main-play`);

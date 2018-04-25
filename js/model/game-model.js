@@ -2,7 +2,10 @@ import levels from '../data/data';
 
 const INITIAL_STATE = Object.freeze({
   lifeCount: 3,
-  timeCount: 5 * 60, // 5 минут
+  timeCount: {
+    minutes: 5,
+    seconds: `0${0}`
+  },
   level: 1,
   points: 0,
   answerCount: 0,
@@ -27,7 +30,7 @@ export default class GameModel {
   }
 
   get isTimeEnd() {
-    return !this._state.timeCount;
+    return !this._state.timeCount.minutes && this._state.timeCount.seconds === `00`;
   }
 
   get currentLevel() {
@@ -38,7 +41,17 @@ export default class GameModel {
     return this._state.lifeCount <= 0;
   }
 
-  timerTick() {
-    this._state.timeCount -= 1;
+  timer() {
+    if (this._state.timeCount.seconds > 0) {
+      this._state.timeCount.seconds = this._state.timeCount.seconds < 10 ? `0${this._state.timeCount.seconds - 1}` : this._state.timeCount.seconds - 1;
+    } else {
+      this._state.timeCount.seconds = 59;
+
+      if (this._state.timeCount.minutes > 0) {
+        this._state.timeCount.minutes--;
+      } else {
+        this._state.timeCount.minutes = 0;
+      }
+    }
   }
 }
