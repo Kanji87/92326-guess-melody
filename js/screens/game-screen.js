@@ -42,7 +42,6 @@ export default class GameScreen {
       const result = new TimeoutView();
       this.gameContent.innerHTML = ``;
       this.gameContent.appendChild(result.element);
-      // this.model.reset();
       return;
     }
     const timer = new TimerView(this.model.state);
@@ -90,7 +89,6 @@ export default class GameScreen {
       const result = new LoseView();
       this.gameContent.innerHTML = ``;
       this.gameContent.appendChild(result.element);
-      // this.model.reset();
       return;
     }
     if (this.model.hasNextLevel) {
@@ -111,7 +109,7 @@ export default class GameScreen {
     this.updateLifebar();
     GameScreen._initAudioPlayer(this.content.element);
     this._interval = setInterval(() => {
-      this.model.runOneTick();
+      this.model.timerTick();
       this.updateTimer();
     }, 1000);
   }

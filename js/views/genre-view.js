@@ -1,5 +1,5 @@
 import AbstractView from "./abstract-view";
-import {levels} from '../data/data';
+import levels from '../data/data';
 
 export default class GenreView extends AbstractView {
   constructor(state) {

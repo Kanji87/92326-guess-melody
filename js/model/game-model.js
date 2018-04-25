@@ -1,6 +1,4 @@
-import {
-  levels
-} from '../data/data';
+import levels from '../data/data';
 
 const INITIAL_STATE = Object.freeze({
   lifeCount: 3,
@@ -24,10 +22,6 @@ export default class GameModel {
     return this._state.level++;
   }
 
-  // reset() {
-  //   this._state = Object.assign({}, INITIAL_STATE);
-  // }
-
   get state() {
     return this._state;
   }
@@ -40,24 +34,11 @@ export default class GameModel {
     return this._state.level;
   }
 
-  // get currentLevelData() {
-  //   return levels[this._state.level - 1];
-  // }
-
   get isLifeEnd() {
     return this._state.lifeCount <= 0;
   }
 
-  // tick(stateObj) {
-  //   console.log(stateObj.timeCount);
-  //   console.log(stateObj.timeCount - 1);
-    
-  //   const timeLeft = stateObj.timeCount - 1;
-  //   return Object.assign({}, stateObj, {timeLeft});
-  // }
-
-  runOneTick() {
-    // this._state = this.tick(this._state);
+  timerTick() {
     this._state.timeCount -= 1;
   }
 }

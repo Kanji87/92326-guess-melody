@@ -7,7 +7,7 @@ export default class Utils {
     return a;
   }
 
-  static _getRandomItems(num, arr) {
+  static getRandomItems(num, arr) {
     let itemsArray = [...arr];
     Utils._shuffle(itemsArray);
     itemsArray = itemsArray.slice(0, num);

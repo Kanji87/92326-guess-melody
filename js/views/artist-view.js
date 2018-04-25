@@ -1,5 +1,5 @@
 import AbstractView from "./abstract-view";
-import {levels} from '../data/data';
+import levels from '../data/data';
 
 export default class ArtistView extends AbstractView {
   constructor(state) {
@@ -37,6 +37,8 @@ export default class ArtistView extends AbstractView {
       evt.preventDefault();
       const answer = evt.target.closest(`.main-answer-wrapper`).querySelector(`.main-answer-preview`);
       const answerText = answer.getAttribute(`alt`);
+      console.log(answerText);
+      console.log(levels[this.level - 1].correctAnswerArtist);
       if (answerText === levels[this.level - 1].correctAnswerArtist) {
         this.onAnswer(true);
       } else {
