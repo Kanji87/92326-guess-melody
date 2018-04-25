@@ -3,8 +3,8 @@ import AbstractView from '../views/abstract-view';
 export default class TimerView extends AbstractView {
   constructor(state) {
     super();
-    this.minutesLeft = state.timeCount.minutes;
-    this.secondsLeft = state.timeCount.seconds;
+    this.minutesLeft = state.minutesCount;
+    this.secondsLeft = state.secondsCount;
   }
 
   get template() {
