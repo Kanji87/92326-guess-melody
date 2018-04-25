@@ -1,8 +1,3 @@
-export const GameData = {
-  ANSWER_REWARD: 1,
-  FAST_ANSWER_REWARD: 2
-};
-
 export const levels = [
   {
     levelType: `artist`,

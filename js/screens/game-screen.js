@@ -2,10 +2,13 @@ import TimerView from '../views/timer-view';
 import LifebarView from '../views/lifebar-view';
 import ArtistView from '../views/artist-view';
 import GenreView from '../views/genre-view';
+import GameData from '../views/genre-view';
 
 export default class GameScreen {
   constructor(model) {
     this.model = model;
+    this._answerReward = 1;
+
     this.timer = new TimerView(this.model.state);
     this.lifebar = new LifebarView(this.model.state);
     this.content = this.isArtistLevel !== 0 ? new ArtistView(this.model.state) : new GenreView(this.model.state);
@@ -29,6 +32,7 @@ export default class GameScreen {
 
   goToNextLevel() {
     this.changeLevel();
+    this.updateLifebar();
     this._interval = setInterval(() => {
       this.model.runOneTick();
       this.updateTimer();
@@ -46,7 +50,19 @@ export default class GameScreen {
     this.timer = timer;
   }
 
+  updateLifebar() {
+    const lifebar = new LifebarView(this.model.state);
+    this.gameContent.replaceChild(lifebar.element, this.lifebar.element);
+    this.lifebar = lifebar;
+  }
+
   checkAnswer(answer) {
+    if (answer) {
+      this.model.state.points += this._answerReward;
+    } else {
+      this.model.state.points -= 1;
+      this.model.state.lifeCount -= 1;
+    }
     this.stopGame();
     this.model.increaseLevel();
     this.goToNextLevel();
