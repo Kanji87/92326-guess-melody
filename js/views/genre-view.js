@@ -1,4 +1,4 @@
-import AbstractView from "./abstract-view";
+import AbstractView from './abstract-view';
 import levels from '../data/data';
 
 export default class GenreView extends AbstractView {

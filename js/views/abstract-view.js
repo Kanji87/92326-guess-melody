@@ -15,9 +15,7 @@ export default class AbstractView {
     return Utils.createTemplate(this.template);
   }
 
-  bind() {
-    // тут будем задавать события для вьюх
-  }
+  bind() {}
 
   get element() {
     if (this._element) {

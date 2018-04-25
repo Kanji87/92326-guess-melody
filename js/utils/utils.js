@@ -19,31 +19,4 @@ export default class Utils {
     dummyWrap.innerHTML = templateString.trim();
     return dummyWrap.firstChild;
   }
-
-  static renderTemplate(node, rootNode) {
-    rootNode.innerHTML = ``;
-    rootNode.appendChild(node);
-  }
-
-  static initAudioPlayer() {
-    const playButtons = document.querySelectorAll(`.player-control`);
-    playButtons.forEach((playButton) => {
-      playButton.addEventListener(`click`, (evt) => {
-        evt.preventDefault();
-        const audio = evt.target.closest(`.player`).querySelector(`audio`);
-        const audioPlayers = document.querySelectorAll(`audio`);
-        if (audio.paused) {
-          audioPlayers.forEach((audioPlayer) => {
-            audioPlayer.pause();
-            audioPlayer.closest(`.player`).querySelector(`.player-control`).classList.remove(`player-control--pause`);
-          });
-          audio.play();
-          playButton.classList.add(`player-control--pause`);
-        } else {
-          audio.pause();
-          playButton.classList.remove(`player-control--pause`);
-        }
-      });
-    });
-  }
 }

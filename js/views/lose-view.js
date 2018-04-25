@@ -1,4 +1,4 @@
-import AbstractView from "./abstract-view";
+import AbstractView from './abstract-view';
 import App from '../app/app';
 
 export default class LoseView extends AbstractView {
