@@ -9,7 +9,7 @@ import TimeoutView from '../views/timeout-view';
 export default class GameScreen {
   constructor(model) {
     this.model = model;
-    this._answerReward = 1;
+    this._answerReward = 0;
 
     this.timer = new TimerView(this.model.state);
     this.lifebar = new LifebarView(this.model.state);
@@ -84,6 +84,7 @@ export default class GameScreen {
       this.model.state.points -= 1;
       this.model.state.lifeCount -= 1;
     }
+
     if (this.model.isLifeEnd) {
       this.stopGame();
       const result = new LoseView();
@@ -91,6 +92,7 @@ export default class GameScreen {
       this.gameContent.appendChild(result.element);
       return;
     }
+
     if (this.model.hasNextLevel) {
       this.stopGame();
       this.model.increaseLevel();
@@ -104,6 +106,10 @@ export default class GameScreen {
   }
 
   goToNextLevel() {
+    this._answerReward = 2;
+    setTimeout(() => {
+      this._answerReward = 1;
+    }, 30000);
     this.changeLevel();
     this.updateLifebar();
     GameScreen._initAudioPlayer(this.content.element);
