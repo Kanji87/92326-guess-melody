@@ -29,7 +29,7 @@ export default class ArtistView extends AbstractView {
     `;
   }
 
-  onAnswer(answer) {}
+  onAnswer() {}
 
   bind() {
     const answersNode = this.element.querySelector(`.main-list`);

@@ -1,3 +1,4 @@
 import App from './app/app';
 
-App.showWelcome();
+// App.showWelcome();
+App.loadGame();

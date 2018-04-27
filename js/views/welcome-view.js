@@ -6,6 +6,7 @@ export default class WelcomeView extends AbstractView {
     super();
     this.state = state;
   }
+
   get template() {
     return `
       <section class="main main--welcome">

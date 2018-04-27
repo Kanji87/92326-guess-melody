@@ -6,6 +6,7 @@ export default class GenreView extends AbstractView {
     super();
     this.level = state.level;
   }
+
   get template() {
     return `
       <section class="main main--level main--level-genre">
@@ -20,7 +21,7 @@ export default class GenreView extends AbstractView {
     `;
   }
 
-  onAnswer(correctGenre) {}
+  onAnswer() {}
 
   bind() {
     const correctGenre = levels[this.level - 1].correctAnswerGenre;

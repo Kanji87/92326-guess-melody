@@ -5,6 +5,7 @@ export default class LoseView extends AbstractView {
   constructor() {
     super();
   }
+
   get template() {
     return `
       <section class="main main--result">
@@ -15,9 +16,6 @@ export default class LoseView extends AbstractView {
         <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
       </section>
     `;
-  }
-
-  onReplayClick() {
   }
 
   bind() {
