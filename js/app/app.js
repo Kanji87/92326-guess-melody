@@ -47,12 +47,12 @@ export default class App {
   static loadGame() {
     const loadView = new LoadView();
     App._changeViewTo(loadView.element);
-    window.fetch(`https://es.dump.academy/guess-melody/questions`).
-        then(App._checkResponseStatus).
-        then((response) => response.json()).
-        then((data) => levelsAdapter(data)).
-        then(App.showWelcome).
-        catch(App.showError);
+    window.fetch(`https://es.dump.academy/guess-melody/questions`)
+        .then(App._checkResponseStatus)
+        .then((response) => response.json())
+        .then((data) => levelsAdapter(data))
+        .then(App.showWelcome)
+        .catch(App.showError);
   }
 
   static showWelcome(data) {
