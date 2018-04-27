@@ -1,9 +1,9 @@
 import AbstractView from './abstract-view';
-import levels from '../data/data';
 
 export default class GenreView extends AbstractView {
-  constructor(state) {
+  constructor(state, data) {
     super();
+    this.levels = data;
     this.level = state.level;
   }
 
@@ -11,9 +11,9 @@ export default class GenreView extends AbstractView {
     return `
       <section class="main main--level main--level-genre">
         <div class="main-wrap">
-          <h2 class="title">Выберите ${levels[this.level - 1].correctAnswerGenre} треки</h2>
+          <h2 class="title">Выберите ${this.levels[this.level - 1].correctAnswerGenre} треки</h2>
           <form class="genre">
-            ${levels[this.level - 1].genreList.map((level, index) => GenreView._genreAnswerItem(level, index)).join(``)}
+            ${this.levels[this.level - 1].genreList.map((level, index) => GenreView._genreAnswerItem(level, index)).join(``)}
             <button class="genre-answer-send" type="submit" disabled="disabled">Ответить</button>
           </form>
         </div>
@@ -24,7 +24,7 @@ export default class GenreView extends AbstractView {
   onAnswer() {}
 
   bind() {
-    const correctGenre = levels[this.level - 1].correctAnswerGenre;
+    const correctGenre = this.levels[this.level - 1].correctAnswerGenre;
     const checkboxesNode = this.element.querySelector(`.genre`);
     const submitButton = this.element.querySelector(`.genre-answer-send`);
 

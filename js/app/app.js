@@ -7,19 +7,56 @@ import GameScreen from '../screens/game-screen';
 
 const rootNode = document.querySelector(`.app`);
 
+const levelsAdapter = (data) => {
+  const levelsArray = [];
+  for (let i = 0; i < data.length; i++) {
+    const levelData = {};
+    levelData.correctAnswerNum = 0;
+    if (data[i].type === `artist`) {
+      const artistList = [];
+      for (let answer of data[i].answers) {
+        const artist = {};
+        artist.artist = answer.title;
+        artist.image = answer.image.url;
+        artist.name = answer.title;
+        artistList.push(artist);
+      }
+      levelData.type = data[i].type;
+      levelData.artistList = artistList;
+      levelData.correctAnswerSrc = data[i].src;
+      levelData.correctAnswerArtist = levelData.artistList[0].artist;
+    } else {
+      const genreList = [];
+      for (let answer of data[i].answers) {
+        const genreItem = {};
+        genreItem.genre = answer.genre;
+        genreItem.src = answer.src;
+        genreList.push(genreItem);
+      }
+      levelData.type = data[i].type;
+      levelData.genreList = genreList;
+      levelData.correctAnswerSrc = levelData.genreList[0].src;
+      levelData.correctAnswerGenre = levelData.genreList[0].genre;
+    }
+    levelsArray.push(levelData);
+  }
+  return levelsArray;
+};
+
 export default class App {
   static loadGame() {
     const loadView = new LoadView();
     App._changeViewTo(loadView.element);
     window.fetch(`https://es.dump.academy/guess-melody/questions`).
         then(App._checkResponseStatus).
-        then((response) => console.log(response.json())).
+        then((response) => response.json()).
+        then((data) => levelsAdapter(data)).
         then(App.showWelcome).
         catch(App.showError);
   }
 
-  static showWelcome() {
-    const welcome = new WelcomeView(new GameModel().state);
+  static showWelcome(data) {
+    const welcome = new WelcomeView(new GameModel().state, data);
     App._changeViewTo(welcome.element);
   }
 
@@ -28,8 +65,8 @@ export default class App {
     App._changeViewTo(errorView.element);
   }
 
-  static runGame() {
-    const gameScreen = new GameScreen(new GameModel());
+  static runGame(data) {
+    const gameScreen = new GameScreen(new GameModel(data));
     App._changeViewTo(gameScreen.element);
     gameScreen.goToNextLevel();
   }

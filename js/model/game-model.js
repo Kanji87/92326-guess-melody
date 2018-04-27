@@ -1,5 +1,3 @@
-import levels from '../data/data';
-
 const INITIAL_STATE = Object.freeze({
   lifeCount: 3,
   minutesCount: 5,
@@ -11,12 +9,13 @@ const INITIAL_STATE = Object.freeze({
 });
 
 export default class GameModel {
-  constructor() {
+  constructor(data) {
+    this.levels = data;
     this._state = Object.assign({}, INITIAL_STATE);
   }
 
   get hasNextLevel() {
-    return levels[this._state.level] !== void 0;
+    return this.levels[this._state.level] !== void 0;
   }
 
   increaseLevel() {

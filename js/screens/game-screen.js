@@ -13,7 +13,7 @@ export default class GameScreen {
 
     this.timer = new TimerView(this.model.state);
     this.lifebar = new LifebarView(this.model.state);
-    this.content = this.isArtistLevel !== 0 ? new ArtistView(this.model.state) : new GenreView(this.model.state);
+    this.content = this.isArtistLevel ? new ArtistView(this.model.state, this.model.levels) : new GenreView(this.model.state, this.model.levels);
 
     this.gameContent = document.createElement(`div`);
     this.gameContent.classList.add(`main`);
@@ -29,7 +29,8 @@ export default class GameScreen {
   }
 
   get isArtistLevel() {
-    return this.model.state.level % 2 !== 0;
+    return this.model.levels[this.model.state.level - 1].type === `artist`;
+    // return this.model.state.level % 2 !== 0;
   }
 
   stopGame() {
@@ -39,7 +40,7 @@ export default class GameScreen {
   updateTimer() {
     if (this.model.isTimeEnd) {
       this.stopGame();
-      const result = new TimeoutView();
+      const result = new TimeoutView(this.model.levels);
       this.gameContent.innerHTML = ``;
       this.gameContent.appendChild(result.element);
       return;
@@ -87,7 +88,7 @@ export default class GameScreen {
 
     if (this.model.isLifeEnd) {
       this.stopGame();
-      const result = new LoseView();
+      const result = new LoseView(this.model.levels);
       this.gameContent.innerHTML = ``;
       this.gameContent.appendChild(result.element);
       return;
@@ -99,7 +100,7 @@ export default class GameScreen {
       this.goToNextLevel();
     } else {
       this.stopGame();
-      const result = new ResultView(this.model.state);
+      const result = new ResultView(this.model.state, this.model.levels);
       this.gameContent.innerHTML = ``;
       this.gameContent.appendChild(result.element);
     }
@@ -120,7 +121,7 @@ export default class GameScreen {
   }
 
   changeLevel() {
-    const level = this.isArtistLevel ? new ArtistView(this.model.state) : new GenreView(this.model.state);
+    const level = this.isArtistLevel ? new ArtistView(this.model.state, this.model.levels) : new GenreView(this.model.state, this.model.levels);
     level.onAnswer = this.checkAnswer.bind(this);
     this.changeView(level);
   }

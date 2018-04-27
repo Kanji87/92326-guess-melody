@@ -68,4 +68,5 @@ const collectLevels = (data, levelsNum) => {
 };
 
 const levels = collectLevels(artistsData, 10);
+// console.log(levels);
 export default levels;
