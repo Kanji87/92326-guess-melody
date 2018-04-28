@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import showPlayerResult from './result';
+// import showPlayerResult from './result';
+import ResultView from '../views/result-view';
 
 const testPlayerResult1 = {
   points: 20,
@@ -42,24 +43,24 @@ const resultStrings = {
 
 describe(`playerResult function`, () => {
   it(`expect lose string`, () => {
-    expect(showPlayerResult(testResults1, losePlayerResult)).to.have.string(resultStrings.lifeEnded);
+    expect(ResultView._showPlayerResult(testResults1, losePlayerResult)).to.have.string(resultStrings.lifeEnded);
   });
   it(`expect timeCount string`, () => {
-    expect(showPlayerResult(testResults1, timeCountPlayerResult)).to.have.string(resultStrings.timeEnded);
+    expect(ResultView._showPlayerResult(testResults1, timeCountPlayerResult)).to.have.string(resultStrings.timeEnded);
   });
   it(`expect win string`, () => {
-    expect(showPlayerResult(testResults1, testPlayerResult2)).to.be.a.string(resultStrings.fourthPlace);
+    expect(ResultView._showPlayerResult(testResults1, testPlayerResult2)).to.be.a.string(resultStrings.fourthPlace);
   });
   it(`expect 3 place win string`, () => {
-    expect(showPlayerResult(testResults1, testPlayerResult3)).to.be.a.string(resultStrings.thirdPlace);
+    expect(ResultView._showPlayerResult(testResults1, testPlayerResult3)).to.be.a.string(resultStrings.thirdPlace);
   });
   it(`expect top win string in loser array`, () => {
-    expect(showPlayerResult(testResults2, testPlayerResult2)).to.be.a.string(resultStrings.firstPlace);
+    expect(ResultView._showPlayerResult(testResults2, testPlayerResult2)).to.be.a.string(resultStrings.firstPlace);
   });
   it(`expect top win string in normal array`, () => {
-    expect(showPlayerResult(testResults3, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
+    expect(ResultView._showPlayerResult(testResults3, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
   });
   it(`expect top win string in top rated players array`, () => {
-    expect(showPlayerResult(testResults4, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
+    expect(ResultView._showPlayerResult(testResults4, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
   });
 });

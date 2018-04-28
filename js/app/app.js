@@ -5,52 +5,17 @@ import LoadView from '../views/loading-view';
 import GameModel from '../model/game-model';
 import GameScreen from '../screens/game-screen';
 
-const rootNode = document.querySelector(`.app`);
-
-const levelsAdapter = (data) => {
-  const levelsArray = [];
-  for (let i = 0; i < data.length; i++) {
-    const levelData = {};
-    levelData.correctAnswerNum = 0;
-    if (data[i].type === `artist`) {
-      const artistList = [];
-      for (let answer of data[i].answers) {
-        const artist = {};
-        artist.artist = answer.title;
-        artist.image = answer.image.url;
-        artist.name = answer.title;
-        artistList.push(artist);
-      }
-      levelData.type = data[i].type;
-      levelData.artistList = artistList;
-      levelData.correctAnswerSrc = data[i].src;
-      levelData.correctAnswerArtist = levelData.artistList[0].artist;
-    } else {
-      const genreList = [];
-      for (let answer of data[i].answers) {
-        const genreItem = {};
-        genreItem.genre = answer.genre;
-        genreItem.src = answer.src;
-        genreList.push(genreItem);
-      }
-      levelData.type = data[i].type;
-      levelData.genreList = genreList;
-      levelData.correctAnswerSrc = levelData.genreList[0].src;
-      levelData.correctAnswerGenre = levelData.genreList[0].genre;
-    }
-    levelsArray.push(levelData);
-  }
-  return levelsArray;
-};
+const ROOT_NODE = document.querySelector(`.app`);
+const LOAD_LEVELS_URL = `https://es.dump.academy/guess-melody/questions`;
 
 export default class App {
   static loadGame() {
     const loadView = new LoadView();
     App._changeViewTo(loadView.element);
-    window.fetch(`https://es.dump.academy/guess-melody/questions`)
+    window.fetch(LOAD_LEVELS_URL)
         .then(App._checkResponseStatus)
         .then((response) => response.json())
-        .then((data) => levelsAdapter(data))
+        .then((data) => GameModel.levelsAdapter(data))
         .then(App.showWelcome)
         .catch(App.showError);
   }
@@ -77,8 +42,8 @@ export default class App {
   }
 
   static _changeViewTo(element) {
-    rootNode.innerHTML = ``;
-    rootNode.appendChild(element);
+    ROOT_NODE.innerHTML = ``;
+    ROOT_NODE.appendChild(element);
   }
 
   static _checkResponseStatus(response) {

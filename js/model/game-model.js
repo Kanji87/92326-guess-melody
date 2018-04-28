@@ -51,4 +51,40 @@ export default class GameModel {
       }
     }
   }
+
+  static levelsAdapter(data) {
+    const levelsArray = [];
+    for (let i = 0; i < data.length; i++) {
+      const levelData = {};
+      levelData.correctAnswerNum = 0;
+      if (data[i].type === `artist`) {
+        const artistList = [];
+        for (let answer of data[i].answers) {
+          const artist = {};
+          artist.artist = answer.title;
+          artist.image = answer.image.url;
+          artist.name = answer.title;
+          artistList.push(artist);
+        }
+        levelData.type = data[i].type;
+        levelData.artistList = artistList;
+        levelData.correctAnswerSrc = data[i].src;
+        levelData.correctAnswerArtist = levelData.artistList[0].artist;
+      } else {
+        const genreList = [];
+        for (let answer of data[i].answers) {
+          const genreItem = {};
+          genreItem.genre = answer.genre;
+          genreItem.src = answer.src;
+          genreList.push(genreItem);
+        }
+        levelData.type = data[i].type;
+        levelData.genreList = genreList;
+        levelData.correctAnswerSrc = levelData.genreList[0].src;
+        levelData.correctAnswerGenre = levelData.genreList[0].genre;
+      }
+      levelsArray.push(levelData);
+    }
+    return levelsArray;
+  }
 }
