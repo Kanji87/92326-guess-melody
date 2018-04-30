@@ -1,6 +1,5 @@
 import {expect} from 'chai';
-// import showPlayerResult from './result';
-import ResultView from '../views/result-view';
+import GameModel from '../model/game-model';
 
 const testPlayerResult1 = {
   points: 20,
@@ -43,24 +42,24 @@ const resultStrings = {
 
 describe(`playerResult function`, () => {
   it(`expect lose string`, () => {
-    expect(ResultView._showPlayerResult(testResults1, losePlayerResult)).to.have.string(resultStrings.lifeEnded);
+    expect(GameModel.showPlayerResult(testResults1, losePlayerResult)).to.have.string(resultStrings.lifeEnded);
   });
   it(`expect timeCount string`, () => {
-    expect(ResultView._showPlayerResult(testResults1, timeCountPlayerResult)).to.have.string(resultStrings.timeEnded);
+    expect(GameModel.showPlayerResult(testResults1, timeCountPlayerResult)).to.have.string(resultStrings.timeEnded);
   });
   it(`expect win string`, () => {
-    expect(ResultView._showPlayerResult(testResults1, testPlayerResult2)).to.be.a.string(resultStrings.fourthPlace);
+    expect(GameModel.showPlayerResult(testResults1, testPlayerResult2)).to.be.a.string(resultStrings.fourthPlace);
   });
   it(`expect 3 place win string`, () => {
-    expect(ResultView._showPlayerResult(testResults1, testPlayerResult3)).to.be.a.string(resultStrings.thirdPlace);
+    expect(GameModel.showPlayerResult(testResults1, testPlayerResult3)).to.be.a.string(resultStrings.thirdPlace);
   });
   it(`expect top win string in loser array`, () => {
-    expect(ResultView._showPlayerResult(testResults2, testPlayerResult2)).to.be.a.string(resultStrings.firstPlace);
+    expect(GameModel.showPlayerResult(testResults2, testPlayerResult2)).to.be.a.string(resultStrings.firstPlace);
   });
   it(`expect top win string in normal array`, () => {
-    expect(ResultView._showPlayerResult(testResults3, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
+    expect(GameModel.showPlayerResult(testResults3, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
   });
   it(`expect top win string in top rated players array`, () => {
-    expect(ResultView._showPlayerResult(testResults4, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
+    expect(GameModel.showPlayerResult(testResults4, testPlayerResult1)).to.be.a.string(resultStrings.firstPlace);
   });
 });
