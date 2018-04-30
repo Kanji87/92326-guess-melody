@@ -2,9 +2,11 @@ import AbstractView from './abstract-view';
 import App from '../app/app';
 
 export default class LoseView extends AbstractView {
-  constructor() {
+  constructor(data) {
     super();
+    this.data = data;
   }
+
   get template() {
     return `
       <section class="main main--result">
@@ -17,14 +19,11 @@ export default class LoseView extends AbstractView {
     `;
   }
 
-  onReplayClick() {
-  }
-
   bind() {
     const replay = this.element.querySelector(`.main-replay`);
     replay.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      App.runGame();
+      App.runGame(this.data);
     });
   }
 }

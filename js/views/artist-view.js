@@ -1,9 +1,9 @@
 import AbstractView from './abstract-view';
-import levels from '../data/data';
 
 export default class ArtistView extends AbstractView {
-  constructor(state) {
+  constructor(state, data) {
     super();
+    this.levels = data;
     this.level = state.level;
   }
 
@@ -14,7 +14,7 @@ export default class ArtistView extends AbstractView {
           <h2 class="title main-title">Кто исполняет эту песню?</h2>
           <div class="player-wrapper">
             <div class="player">
-              <audio src="${levels[this.level - 1].correctAnswerSrc}"></audio>
+              <audio src="${this.levels[this.level - 1].correctAnswerSrc}"></audio>
               <button class="player-control"></button>
               <div class="player-track">
                 <span class="player-status"></span>
@@ -22,14 +22,14 @@ export default class ArtistView extends AbstractView {
             </div>
           </div>
           <form class="main-list">
-            ${levels[this.level - 1].artistList.map((level, index) => ArtistView._artistAnswerItem(level, index)).join(``)}
+            ${this.levels[this.level - 1].artistList.map((level, index) => ArtistView._artistAnswerItem(level, index)).join(``)}
           </form>
         </div>
       </section>
     `;
   }
 
-  onAnswer(answer) {}
+  onAnswer() {}
 
   bind() {
     const answersNode = this.element.querySelector(`.main-list`);
@@ -37,7 +37,7 @@ export default class ArtistView extends AbstractView {
       evt.preventDefault();
       const answer = evt.target.closest(`.main-answer-wrapper`).querySelector(`.main-answer-preview`);
       const answerText = answer.getAttribute(`alt`);
-      if (answerText === levels[this.level - 1].correctAnswerArtist) {
+      if (answerText === this.levels[this.level - 1].correctAnswerArtist) {
         this.onAnswer(true);
       } else {
         this.onAnswer(false);

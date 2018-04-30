@@ -2,6 +2,10 @@ import AbstractView from '../views/abstract-view';
 import App from '../app/app';
 
 export default class TimoutView extends AbstractView {
+  constructor(data) {
+    super();
+    this.data = data;
+  }
   get template() {
     return `
       <section class="main main--result">
@@ -18,7 +22,7 @@ export default class TimoutView extends AbstractView {
     const replay = this.element.querySelector(`.main-replay`);
     replay.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      App.runGame();
+      App.runGame(this.data);
     });
   }
 }
