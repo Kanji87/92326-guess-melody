@@ -2,7 +2,6 @@ import TimerView from '../views/timer-view';
 import LifebarView from '../views/lifebar-view';
 import ArtistView from '../views/artist-view';
 import GenreView from '../views/genre-view';
-import ResultView from '../views/result-view';
 import LoseView from '../views/lose-view';
 import TimeoutView from '../views/timeout-view';
 
