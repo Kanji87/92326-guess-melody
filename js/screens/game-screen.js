@@ -2,9 +2,9 @@ import TimerView from '../views/timer-view';
 import LifebarView from '../views/lifebar-view';
 import ArtistView from '../views/artist-view';
 import GenreView from '../views/genre-view';
-import ResultView from '../views/result-view';
 import LoseView from '../views/lose-view';
 import TimeoutView from '../views/timeout-view';
+import ResultView from '../views/result-view';
 
 export default class GameScreen {
   constructor(model) {
@@ -82,7 +82,7 @@ export default class GameScreen {
     if (answer) {
       this.model.state.points += this._answerReward;
     } else {
-      this.model.state.points -= 1;
+      this.model.state.points -= 2;
       this.model.state.lifeCount -= 1;
     }
 
@@ -100,9 +100,16 @@ export default class GameScreen {
       this.goToNextLevel();
     } else {
       this.stopGame();
-      const result = new ResultView(this.model.state, this.model.levels);
-      this.gameContent.innerHTML = ``;
-      this.gameContent.appendChild(result.element);
+      this.model.getStats().then((data) => {
+        const gameResults = [];
+        for (let dataItem of data) {
+          gameResults.push(dataItem.points);
+        }
+        const result = new ResultView(this.model.state, this.model.levels, gameResults);
+        this.gameContent.innerHTML = ``;
+        this.gameContent.appendChild(result.element);
+        this.model.sendResult(this.model.state);
+      });
     }
   }
 

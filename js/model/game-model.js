@@ -1,3 +1,5 @@
+import Utils from '../utils/utils';
+
 const INITIAL_STATE = Object.freeze({
   lifeCount: 3,
   minutesCount: 5,
@@ -7,6 +9,9 @@ const INITIAL_STATE = Object.freeze({
   answerCount: 0,
   fastAnswerCount: 0
 });
+
+const APP_ID = 22101985;
+const SEND_RESULT_URL = `https://es.dump.academy/guess-melody/stats/${APP_ID}`;
 
 export default class GameModel {
   constructor(data) {
@@ -50,6 +55,24 @@ export default class GameModel {
         this._state.minutesCount = 0;
       }
     }
+  }
+
+  sendResult(data) {
+    const requestSettings = {
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': `application/json`
+      },
+      method: `POST`
+    };
+    return fetch(`${SEND_RESULT_URL}`, requestSettings)
+        .then((response) => Utils.checkResponseStatus(response));
+  }
+
+  getStats() {
+    return fetch(SEND_RESULT_URL)
+        .then(Utils.checkResponseStatus)
+        .then((response) => response.json());
   }
 
   static levelsAdapter(data) {
@@ -111,7 +134,7 @@ export default class GameModel {
       results.sort((a, b) => {
         return b - a;
       });
-      const playersCount = results.length;
+      const playersCount = results.length - 1;
       const playerPlace = results.indexOf(playerResult.points) + 1;
       const playerRating = Math.floor((playersCount - playerPlace) / playersCount * 100);
       return `Вы заняли ${playerPlace}${GameModel.playerPlaceEndings(playerPlace)} место из ${playersCount} игроков. Это лучше, чем у ${playerRating}% игроков`;
