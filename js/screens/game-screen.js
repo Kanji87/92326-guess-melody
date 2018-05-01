@@ -82,7 +82,7 @@ export default class GameScreen {
     if (answer) {
       this.model.state.points += this._answerReward;
     } else {
-      this.model.state.points -= 1;
+      this.model.state.points -= 2;
       this.model.state.lifeCount -= 1;
     }
 
@@ -100,9 +100,7 @@ export default class GameScreen {
       this.goToNextLevel();
     } else {
       this.stopGame();
-      const result = new ResultView(this.model.state, this.model.levels);
-      this.gameContent.innerHTML = ``;
-      this.gameContent.appendChild(result.element);
+      this.model.getStats();
     }
   }
 

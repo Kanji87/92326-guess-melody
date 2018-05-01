@@ -4,6 +4,7 @@ import LoseView from '../views/lose-view';
 import LoadView from '../views/loading-view';
 import GameModel from '../model/game-model';
 import GameScreen from '../screens/game-screen';
+import Utils from '../utils/utils';
 
 const ROOT_NODE = document.querySelector(`.app`);
 const LOAD_LEVELS_URL = `https://es.dump.academy/guess-melody/questions`;
@@ -13,7 +14,7 @@ export default class App {
     const loadView = new LoadView();
     App._changeViewTo(loadView.element);
     window.fetch(LOAD_LEVELS_URL)
-        .then(App._checkResponseStatus)
+        .then(Utils.checkResponseStatus)
         .then((response) => response.json())
         .then((data) => GameModel.levelsAdapter(data))
         .then(App.showWelcome)
@@ -44,13 +45,5 @@ export default class App {
   static _changeViewTo(element) {
     ROOT_NODE.innerHTML = ``;
     ROOT_NODE.appendChild(element);
-  }
-
-  static _checkResponseStatus(response) {
-    if (response.ok) {
-      return response;
-    } else {
-      throw new Error(`${response.status}: ${response.statusText}`);
-    }
   }
 }

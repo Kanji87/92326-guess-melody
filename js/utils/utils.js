@@ -19,4 +19,12 @@ export default class Utils {
     dummyWrap.innerHTML = templateString.trim();
     return dummyWrap.firstChild;
   }
+
+  static checkResponseStatus(response) {
+    if (response.ok) {
+      return response;
+    } else {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    }
+  }
 }
