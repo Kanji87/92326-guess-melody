@@ -4,6 +4,7 @@ import ArtistView from '../views/artist-view';
 import GenreView from '../views/genre-view';
 import LoseView from '../views/lose-view';
 import TimeoutView from '../views/timeout-view';
+import ResultView from '../views/result-view';
 
 export default class GameScreen {
   constructor(model) {
@@ -99,7 +100,16 @@ export default class GameScreen {
       this.goToNextLevel();
     } else {
       this.stopGame();
-      this.model.getStats();
+      this.model.getStats().then((data) => {
+        const gameResults = [];
+        for (let dataItem of data) {
+          gameResults.push(dataItem.points);
+        }
+        const result = new ResultView(this.model.state, this.model.levels, gameResults);
+        this.gameContent.innerHTML = ``;
+        this.gameContent.appendChild(result.element);
+        this.model.sendResult(this.model.state);
+      });
     }
   }
 

@@ -1,5 +1,4 @@
 import Utils from '../utils/utils';
-import ResultView from '../views/result-view';
 
 const INITIAL_STATE = Object.freeze({
   lifeCount: 3,
@@ -71,21 +70,9 @@ export default class GameModel {
   }
 
   getStats() {
-    const gameResults = [];
-    window.fetch(SEND_RESULT_URL)
+    return fetch(SEND_RESULT_URL)
         .then(Utils.checkResponseStatus)
-        .then((response) => response.json())
-        .then((data) => {
-          for (let dataItem of data) {
-            gameResults.push(dataItem.points);
-          }
-        })
-        .then(() => {
-          const result = new ResultView(this._state, this.levels, gameResults);
-          document.querySelector(`.app`).innerHTML = ``;
-          document.querySelector(`.app`).appendChild(result.element);
-          this.sendResult(this._state);
-        });
+        .then((response) => response.json());
   }
 
   static levelsAdapter(data) {
