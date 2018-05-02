@@ -81,6 +81,13 @@ export default class GameScreen {
         }
       });
     });
+
+    if (document.querySelector(`.main--level-artist`)) {
+      const artistPlayButton = document.querySelector(`.main--level-artist .player-control`);
+      const artistAudio = document.querySelector(`.main--level-artist audio`);
+      artistPlayButton.classList.add(`player-control--pause`);
+      artistAudio.play();
+    }
   }
 
   checkAnswer(answer) {
