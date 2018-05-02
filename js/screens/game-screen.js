@@ -95,6 +95,9 @@ export default class GameScreen {
 
   checkAnswer(answer) {
     if (answer) {
+      if (this._answerReward === 2) {
+        this.model.state.fastAnswerCount++;
+      }
       this.model.state.points += this._answerReward;
     } else {
       this.model.state.points -= 2;
@@ -114,15 +117,16 @@ export default class GameScreen {
       this.goToNextLevel();
     } else {
       this.stopGame();
-      this.model.getStats().then((data) => {
-        const gameResults = [];
-        for (let dataItem of data) {
-          gameResults.push(dataItem.points);
-        }
-        const result = new ResultView(this.model.state, this.model.levels, gameResults);
-        this.showResult(result);
-        this.model.sendResult(this.model.state);
-      });
+      this.model.sendResult(this.model.state)
+          .then(() => this.model.getStats())
+          .then((data) => {
+            const gameResults = [];
+            for (let dataItem of data) {
+              gameResults.push(dataItem.points);
+            }
+            const result = new ResultView(this.model.state, this.model.levels, gameResults);
+            this.showResult(result);
+          });
     }
   }
 
