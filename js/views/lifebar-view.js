@@ -9,7 +9,7 @@ export default class LifebarView extends AbstractView {
   get template() {
     return `
     <div class="main-mistakes">
-      ${new Array(this.lifesLeft).fill(`
+      ${new Array(3 - this.lifesLeft).fill(`
       <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`).join(``)}
     </div>
     `;
