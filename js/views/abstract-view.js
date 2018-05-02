@@ -7,6 +7,15 @@ export default class AbstractView {
     }
   }
 
+  get element() {
+    if (this._element) {
+      return this._element;
+    }
+    this._element = this.render();
+    this.bind(this._element);
+    return this._element;
+  }
+
   get template() {
     throw new Error(`Необходим шаблон для вывода`);
   }
@@ -16,13 +25,4 @@ export default class AbstractView {
   }
 
   bind() {}
-
-  get element() {
-    if (this._element) {
-      return this._element;
-    }
-    this._element = this.render();
-    this.bind(this._element);
-    return this._element;
-  }
 }

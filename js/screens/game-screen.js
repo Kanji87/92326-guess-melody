@@ -30,19 +30,22 @@ export default class GameScreen {
 
   get isArtistLevel() {
     return this.model.levels[this.model.state.level - 1].type === `artist`;
-    // return this.model.state.level % 2 !== 0;
   }
 
   stopGame() {
     clearInterval(this._interval);
   }
 
+  showResult(result) {
+    this.gameContent.innerHTML = ``;
+    this.gameContent.appendChild(result.element);
+  }
+
   updateTimer() {
     if (this.model.isTimeEnd) {
       this.stopGame();
       const result = new TimeoutView(this.model.levels);
-      this.gameContent.innerHTML = ``;
-      this.gameContent.appendChild(result.element);
+      this.showResult(result);
       return;
     }
 
@@ -101,8 +104,7 @@ export default class GameScreen {
     if (this.model.isLifeEnd) {
       this.stopGame();
       const result = new LoseView(this.model.levels);
-      this.gameContent.innerHTML = ``;
-      this.gameContent.appendChild(result.element);
+      this.showResult(result);
       return;
     }
 
@@ -118,8 +120,7 @@ export default class GameScreen {
           gameResults.push(dataItem.points);
         }
         const result = new ResultView(this.model.state, this.model.levels, gameResults);
-        this.gameContent.innerHTML = ``;
-        this.gameContent.appendChild(result.element);
+        this.showResult(result);
         this.model.sendResult(this.model.state);
       });
     }

@@ -40,11 +40,8 @@ export default class GenreView extends AbstractView {
       answers.forEach((answer) => {
         isCorrect = answer.value === correctGenre ? true : false;
       });
-      if (isCorrect) {
-        this.onAnswer(true);
-      } else {
-        this.onAnswer(false);
-      }
+
+      this.onAnswer(isCorrect);
     });
   }
 

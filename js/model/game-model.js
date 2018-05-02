@@ -23,10 +23,6 @@ export default class GameModel {
     return this.levels[this._state.level] !== void 0;
   }
 
-  increaseLevel() {
-    return this._state.level++;
-  }
-
   get state() {
     return this._state;
   }
@@ -35,12 +31,12 @@ export default class GameModel {
     return !this._state.minutesCount && this._state.secondsCount === `00`;
   }
 
-  get currentLevel() {
-    return this._state.level;
-  }
-
   get isLifeEnd() {
     return this._state.lifeCount <= 0;
+  }
+
+  increaseLevel() {
+    return this._state.level++;
   }
 
   timer() {
@@ -75,34 +71,44 @@ export default class GameModel {
         .then((response) => response.json());
   }
 
+  static buildArtistLevel(dataObj) {
+    const artistList = [];
+    for (let answer of dataObj.answers) {
+      const artist = {
+        artist: answer.title,
+        image: answer.image.url,
+        name: answer.title
+      };
+      artistList.push(artist);
+    }
+    return artistList;
+  }
+
+  static buildGenrelevel(dataObj) {
+    const genreList = [];
+    for (let answer of dataObj.answers) {
+      const genreItem = {
+        genre: answer.genre,
+        src: answer.src
+      };
+      genreList.push(genreItem);
+    }
+    return genreList;
+  }
+
   static levelsAdapter(data) {
     const levelsArray = [];
-    for (let i = 0; i < data.length; i++) {
+    for (let dataItem of data) {
       const levelData = {};
       levelData.correctAnswerNum = 0;
-      if (data[i].type === `artist`) {
-        const artistList = [];
-        for (let answer of data[i].answers) {
-          const artist = {};
-          artist.artist = answer.title;
-          artist.image = answer.image.url;
-          artist.name = answer.title;
-          artistList.push(artist);
-        }
-        levelData.type = data[i].type;
-        levelData.artistList = artistList;
-        levelData.correctAnswerSrc = data[i].src;
+      if (dataItem.type === `artist`) {
+        levelData.type = dataItem.type;
+        levelData.artistList = GameModel.buildArtistLevel(dataItem);
+        levelData.correctAnswerSrc = dataItem.src;
         levelData.correctAnswerArtist = levelData.artistList[0].artist;
       } else {
-        const genreList = [];
-        for (let answer of data[i].answers) {
-          const genreItem = {};
-          genreItem.genre = answer.genre;
-          genreItem.src = answer.src;
-          genreList.push(genreItem);
-        }
-        levelData.type = data[i].type;
-        levelData.genreList = genreList;
+        levelData.type = dataItem.type;
+        levelData.genreList = GameModel.buildGenrelevel(dataItem);
         levelData.correctAnswerSrc = levelData.genreList[0].src;
         levelData.correctAnswerGenre = levelData.genreList[0].genre;
       }
