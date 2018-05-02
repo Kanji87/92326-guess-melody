@@ -45,9 +45,14 @@ export default class GameScreen {
       this.gameContent.appendChild(result.element);
       return;
     }
+
     const timer = new TimerView(this.model.state);
     this.gameContent.replaceChild(timer.element, this.timer.element);
     this.timer = timer;
+
+    if (this.model.state.minutesCount === 0 && this.model.state.secondsCount < 30) {
+      document.querySelector(`.timer-value`).classList.add(`timer-value--finished`);
+    }
   }
 
   updateLifebar() {
