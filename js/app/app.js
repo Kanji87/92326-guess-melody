@@ -4,21 +4,16 @@ import LoseView from '../views/lose-view';
 import LoadView from '../views/loading-view';
 import GameModel from '../model/game-model';
 import GameScreen from '../screens/game-screen';
-import Utils from '../utils/utils';
+import gameData from '../data/data';
 
 const ROOT_NODE = document.querySelector(`.app`);
-const LOAD_LEVELS_URL = `https://es.dump.academy/guess-melody/questions`;
 
 export default class App {
   static loadGame() {
     const loadView = new LoadView();
     App._changeViewTo(loadView.element);
-    window.fetch(LOAD_LEVELS_URL)
-        .then(Utils.checkResponseStatus)
-        .then((response) => response.json())
-        .then((data) => GameModel.levelsAdapter(data))
-        .then(App.showWelcome)
-        .catch(App.showError);
+    const levels = GameModel.levelsAdapter(gameData.questions);
+    App.showWelcome(levels);
   }
 
   static showWelcome(data) {

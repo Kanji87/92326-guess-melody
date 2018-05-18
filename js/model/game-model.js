@@ -1,4 +1,4 @@
-import Utils from '../utils/utils';
+import gameData from '../data/data';
 
 const INITIAL_STATE = Object.freeze({
   lifeCount: 3,
@@ -9,9 +9,6 @@ const INITIAL_STATE = Object.freeze({
   answerCount: 0,
   fastAnswerCount: 0
 });
-
-const APP_ID = 22101985;
-const SEND_RESULT_URL = `https://es.dump.academy/guess-melody/stats/${APP_ID}`;
 
 export default class GameModel {
   constructor(data) {
@@ -35,6 +32,10 @@ export default class GameModel {
     return this._state.lifeCount <= 0;
   }
 
+  get getStats() {
+    return gameData.stats;
+  }
+
   increaseLevel() {
     return this._state.level++;
   }
@@ -51,24 +52,6 @@ export default class GameModel {
         this._state.minutesCount = 0;
       }
     }
-  }
-
-  sendResult(data) {
-    const requestSettings = {
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': `application/json`
-      },
-      method: `POST`
-    };
-    return fetch(`${SEND_RESULT_URL}`, requestSettings)
-        .then((response) => Utils.checkResponseStatus(response));
-  }
-
-  getStats() {
-    return fetch(SEND_RESULT_URL)
-        .then(Utils.checkResponseStatus)
-        .then((response) => response.json());
   }
 
   static buildArtistLevel(dataObj) {
